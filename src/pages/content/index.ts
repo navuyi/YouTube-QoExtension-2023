@@ -1,13 +1,16 @@
 import { disableOriginalVideoPlayer } from "@src/utils/disableOriginalVideoPlayer";
-import { VideoPlayer } from "./models/VideoPlayer";
+import { Player } from "./models/Player";
 
 const addCustomVideoPlayer = async () : Promise<void> => {
-  if(document.getElementById("custom-video-player") != null){
-    return;
-  }else{
-    const primaryInner = document.getElementById("primary-inner") as  HTMLElement
-    const vid = VideoPlayer.getInstance()
-    vid.mount(primaryInner)
+  const primaryInner = document.getElementById("primary-inner") as  HTMLElement
+  if(document.getElementById("custom-video") != null){
+    // Here reset the player
+    const player = Player.getInstance()
+    player.reset()
+  }
+  else{
+    const player = Player.getInstance()
+    player.mount(primaryInner)
   }
 }
 
