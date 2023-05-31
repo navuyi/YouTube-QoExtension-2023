@@ -4,7 +4,6 @@ import { Player } from "./models/Player";
 const addCustomVideoPlayer = async () : Promise<void> => {
   const primaryInner = document.getElementById("primary-inner") as  HTMLElement
   if(document.getElementById("custom-video") != null){
-    // Here reset the player
     const player = Player.getInstance()
     player.reset()
   }
@@ -16,6 +15,7 @@ const addCustomVideoPlayer = async () : Promise<void> => {
 
 
 window.addEventListener('yt-page-data-updated', async () => {
+  chrome.tabs.ge
   await disableOriginalVideoPlayer()
   await addCustomVideoPlayer()
 });
