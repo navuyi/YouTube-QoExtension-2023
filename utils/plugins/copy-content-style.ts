@@ -14,7 +14,6 @@ export default function copyContentStyle(): PluginOption {
     name: 'make-manifest',
     buildEnd() {
       fs.copyFileSync(contentStyle, resolve(outDir, 'contentStyle.css'));
-
       colorLog('contentStyle copied', 'success');
     },
   };

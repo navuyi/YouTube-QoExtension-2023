@@ -6,6 +6,9 @@ const manifest: Manifest.WebExtensionManifest = {
   name: pkg.displayName,
   version: pkg.version,
   description: pkg.description,
+  permissions: [
+    "tabs"
+  ],
   //options_ui: {
   //  page: 'src/pages/options/index.html',
   //},

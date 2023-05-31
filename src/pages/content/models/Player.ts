@@ -34,5 +34,4 @@ export class Player{
         this.video.seek(0)
         this.audio.seek(0)
     }
-
 }

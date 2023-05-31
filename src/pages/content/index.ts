@@ -15,7 +15,7 @@ const addCustomVideoPlayer = async () : Promise<void> => {
 
 
 window.addEventListener('yt-page-data-updated', async () => {
-  chrome.tabs.ge
+  // To mute the tab use serice-worker - messaging
   await disableOriginalVideoPlayer()
   await addCustomVideoPlayer()
 });

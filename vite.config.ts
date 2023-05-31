@@ -3,6 +3,7 @@ import { resolve } from 'path';
 import { defineConfig } from 'vite';
 import copyContentStyle from './utils/plugins/copy-content-style';
 import makeManifest from './utils/plugins/make-manifest';
+import copyResource from './utils/plugins/copy-resource';
 
 const root = resolve(__dirname, 'src');
 const pagesDir = resolve(root, 'pages');
@@ -18,7 +19,11 @@ export default defineConfig({
       '@pages': pagesDir,
     },
   },
-  plugins: [react(), makeManifest(), copyContentStyle()],
+  plugins: [
+    react(), 
+    makeManifest(), 
+    copyContentStyle()
+  ],
   publicDir,
   build: {
     outDir,
