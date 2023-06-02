@@ -3,12 +3,13 @@ import { Player } from "./models/Player";
 
 const addCustomVideoPlayer = async () : Promise<void> => {
   const primaryInner = document.getElementById("primary-inner") as  HTMLElement
+  
   if(document.getElementById("custom-video") != null){
-    const player = Player.getInstance()
-    player.reset()
+    //const player = new Player()
+    //player.reset()
   }
   else{
-    const player = Player.getInstance()
+    const player = new Player()
     player.mount(primaryInner)
   }
 }

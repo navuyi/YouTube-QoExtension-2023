@@ -28,4 +28,22 @@ export abstract class MediaElement{
         this.element.currentTime = time
     }
 
+    public play = () => {
+        this.element.play()
+    }
+    public pause = () => {
+        this.element.pause()
+    }
+    public getCurrentTime = () : number => {
+        return this.element.currentTime
+    }
+    public isPaused = () : boolean => {
+        return this.element.paused
+    }
+    public getReadyState = () : number => {
+        return this.element.readyState
+    }
+    public getBuffered = () : TimeRanges => {
+        return this.element.buffered
+    }
 }

@@ -1,5 +1,5 @@
 import react from '@vitejs/plugin-react-swc';
-import { resolve } from 'path';
+import path, { resolve } from "path";
 import { defineConfig } from 'vite';
 import copyContentStyle from './utils/plugins/copy-content-style';
 import makeManifest from './utils/plugins/make-manifest';
@@ -22,11 +22,13 @@ export default defineConfig({
   plugins: [
     react(), 
     makeManifest(), 
-    copyContentStyle()
+    copyContentStyle(),
+    copyResource(["src", "templates", "playerUI.html"], "playerUI.html")
   ],
   publicDir,
   build: {
     outDir,
+    assetsDir,
     sourcemap: process.env.__DEV__ === 'true',
     rollupOptions: {
       input: {
@@ -39,8 +41,9 @@ export default defineConfig({
         //options: resolve(pagesDir, 'options', 'index.html'),
       },
       output: {
-        entryFileNames: (chunk) => `src/pages/${chunk.name}/index.js`,
-      },
-    },
+        entryFileNames: (chunk) => `src/pages/${chunk.name}/index.js`
+      }
+    }
   },
 });
+
