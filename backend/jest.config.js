@@ -2,6 +2,6 @@
 module.exports = {
     preset: 'ts-jest',
     testEnvironment: 'node',
-    //testMatch: ["**/?(*.)+(spec|test).[j]s?(x)"],
+    testMatch: ["**/?(*.)+(spec|test).[t]s?(x)"], // only testing on *.test.ts
     //moduleDirectories: ['node_modules', '<rootDir>']
 };
