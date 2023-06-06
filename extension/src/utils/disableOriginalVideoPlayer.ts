@@ -17,6 +17,6 @@ export const disableOriginalVideoPlayer = async () : Promise<void> => {
             resolve()
           }
         }
-      }, 300) // <-- the value here has to be significantly long eg. 300-500 ms
+      }, 500) // <-- the value here has to be significantly long eg. 300-500 ms
     })
   }

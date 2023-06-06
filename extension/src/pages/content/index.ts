@@ -1,27 +1,17 @@
 import { disableOriginalVideoPlayer } from "@src/utils/disableOriginalVideoPlayer";
-import { Player } from "./models/Player";
+import { addCustomVideoPlayer } from "@src/utils/addCustomVideoPlayer";
 
-const addCustomVideoPlayer = async () : Promise<void> => {
-  const primaryInner = document.getElementById("primary-inner") as  HTMLElement
-  
-  if(document.getElementById("custom-video") != null){
-    //const player = new Player()
-    //player.reset()
-  }
-  else{
-    const player = new Player()
-    player.mount(primaryInner)
-  }
-}
 
 
 window.addEventListener('yt-page-data-updated', async () => {
   // To mute the tab use serice-worker - messaging
+  console.log("yt-page-data-updated")
   await disableOriginalVideoPlayer()
   await addCustomVideoPlayer()
 });
 
 window.addEventListener('yt-navigate-start', () => {
+  console.log("yt-navigate-start")
   document.body.style.display = "none"
 });
 

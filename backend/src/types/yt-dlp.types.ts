@@ -1,0 +1,32 @@
+export interface ISourceFormat {
+    asr: number | null
+    filesize: number | null 
+    format_id: string | null
+    format_note: string | null
+    source_preference: number | null
+    fps: number | null
+    audio_channels: number | null
+    height: number | null
+    quality: number | null
+    has_drm: boolean | null
+    tbr: number | null
+    url: string | null
+    width: number | null
+    language: string | null
+    language_preference: number | null
+    preference: string | null
+    ext: string | null
+    vcodec: string | null
+    acodec: string | null
+    dynamic_range: null
+    abr: number | null
+    protocol: string | null
+    fragments: any[] | null
+    container: string | null
+    resolution: string | null
+    aspect_ratio: number | null
+    http_headers: any | null
+    audio_ext: string | null
+    video_ext: string | null
+    format: string | null
+}

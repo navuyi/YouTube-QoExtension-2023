@@ -42,20 +42,17 @@ export class Video extends MediaElement{
     /**
      * Method pauses playback if there is not enough video buffered.
      * Periodic checks are made if enough data is buffered to resume playback.
-     * NOTE - different approach could be to
     */
     private handleWaiting = () => {
         this.pause()
         const interval = setInterval(() => {
-            console.log(this.getReadyState())
-            if(this.getReadyState() >= 4){
+            if(this.getReadyState() >= 4){ // <-- readyState code
                 this.play()
                 clearInterval(interval)
             }
         }, 10)
     }
     
-
     private audioSync = () => {
         this.audio.seek(this.getCurrentTime())
     }
