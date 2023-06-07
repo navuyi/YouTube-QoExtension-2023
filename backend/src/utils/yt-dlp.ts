@@ -1,7 +1,7 @@
 import * as youtubedl from "youtube-dl-exec"
-import { ISourceFormat } from "../types/yt-dlp.types"
+import { IMediaSource} from "../types/yt-dlp.types"
 
-export const getSourceFormats = async (yt_url : string) : Promise<ISourceFormat[]> => {
+export const getMediaSources = async (yt_url : string) : Promise<IMediaSource[]> => {
     const {stdout:raw} = await youtubedl.exec(yt_url, {
         skipDownload: true,
         listFormats:true,
@@ -15,10 +15,10 @@ export const getSourceFormats = async (yt_url : string) : Promise<ISourceFormat[
     return jsonObject.formats
 }
 
-export const getAudioFormats = (allFormats : ISourceFormat[]) => {
+export const getAudioSources = (allFormats : IMediaSource[]) => {
     return allFormats.filter(format => format.vcodec === "none" && format.acodec !== "none")
 }
 
-export const getVideoFormats = (allFormats : ISourceFormat[]) => {
+export const getVideoSources = (allFormats : IMediaSource[]) => {
     return allFormats.filter(format => format.vcodec !== "none" && format.acodec === "none")
 }

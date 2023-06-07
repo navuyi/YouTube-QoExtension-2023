@@ -1,4 +1,4 @@
-export interface ISourceFormat {
+export interface IMediaSource {
     asr: number | null
     filesize: number | null 
     format_id: string | null
