@@ -46,4 +46,10 @@ export abstract class MediaElement{
     public getBuffered = () : TimeRanges => {
         return this.element.buffered
     }
+    public load = () : void => {
+        this.element.load()
+    }
+    public isMounted = () : boolean => {
+        return document.contains(this.element)
+    }
 }

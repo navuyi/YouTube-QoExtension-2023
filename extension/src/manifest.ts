@@ -26,6 +26,9 @@ const manifest: Manifest.WebExtensionManifest = {
   icons: {
     '128': 'icons/icon-128.png',
   },
+  host_permissions: [
+    "http://127.0.0.1/*"
+  ],
   content_scripts: [
     {
       matches: ["https://www.youtube.com/*"],

@@ -1,6 +1,6 @@
 import { disableOriginalVideoPlayer } from "@src/utils/disableOriginalVideoPlayer";
 import { addCustomVideoPlayer } from "@src/utils/addCustomVideoPlayer";
-
+import { Player } from "./models/Player";
 
 
 window.addEventListener('yt-page-data-updated', async () => {
@@ -11,6 +11,13 @@ window.addEventListener('yt-page-data-updated', async () => {
 });
 
 window.addEventListener('yt-navigate-start', () => {
+  const player = Player.getInstance()
+  if(player.getVideo().isMounted() === true){
+    console.log("removing")
+    player.getVideo().pause()
+    player.getAudio().pause()
+    player.removeSources()
+  }
   console.log("yt-navigate-start")
   document.body.style.display = "none"
 });
