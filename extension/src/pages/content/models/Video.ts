@@ -4,12 +4,12 @@ import { MediaElement } from "./MediaElement"
 export class Video extends MediaElement{
     private audio : Audio
 
-    public constructor(audio:Audio){
+    public constructor(audio:Audio, autoplay:boolean = true){
         super("video")
         this.audio = audio
         this.element.id = "custom-video"
 
-        this.element.autoplay = true
+        this.element.autoplay = autoplay
         this.element.controls = true
         this.element.style.width = "100%"
 
@@ -20,17 +20,14 @@ export class Video extends MediaElement{
         this.element.onwaiting = this.handleWaiting
     }
 
-    mount = (container: HTMLElement) => {
-        container.insertBefore(this.element, container.firstChild)
-    }
-
     // Handle seeked is done
     private handleSeeked = () => {
-        this.play()
+        //this.play()
+        this.audioSync()
     }
     // Handle started seeking
     private handleSeeking = () => {
-        this.pause()
+        //this.pause()
     }
     private handlePause = () => {
         this.audio.pause()

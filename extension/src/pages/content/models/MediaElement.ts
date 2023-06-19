@@ -13,7 +13,8 @@ export abstract class MediaElement{
     }
 
     // Declarations
-    public abstract mount(container: HTMLElement) : void
+    // ...
+    // ...
 
     // Implementations
     public getElement = () => {
@@ -51,5 +52,11 @@ export abstract class MediaElement{
     }
     public isMounted = () : boolean => {
         return document.contains(this.element)
+    }
+    public mount = (container:HTMLElement) : void => {
+        container.insertBefore(this.element, container.firstChild)
+    }
+    public unmount = () => {
+        this.element.remove()
     }
 }
