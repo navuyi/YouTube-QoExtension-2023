@@ -13,4 +13,13 @@ export class Audio extends MediaElement{
 
         this.element.style.display = "none"
     }
+
+    public mute = () : void => {
+            this.element.muted ? null : this.element.muted = true
+    }
+
+    public setVolume = (value:number) => {
+        if(value < 0 || value > 1) throw Error("Volume value must be between 0 and 1 inclusive");
+        this.element.volume = value
+    }
 }

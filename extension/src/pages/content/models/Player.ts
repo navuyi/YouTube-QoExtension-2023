@@ -60,48 +60,61 @@ export class Player{
 
     private changeQuality = async () : Promise<void> => {
         try{
+            // Get new source
             const request_url = API_ENDPOINTS.getMediaURLs+`?url=${window.location.href}`
             const response = await axios.get(request_url)
 
+            // Create audio-video and assign new source
             this.secondaryAudio = new Audio(false)
             this.secondaryVideo = new Video(this.secondaryAudio, false)
             this.secondaryVideo.setSource(response.data.videoSource)
             this.secondaryAudio.setSource(response.data.audioSource)
+            this.secondaryAudio.load()
+            this.secondaryVideo.load()
     
+            // Mount av to the DOM
             const container = document.getElementById("primary-inner") as HTMLElement
             this.secondaryVideo.mount(container)
             this.secondaryAudio.mount(container)
     
+            // Make video not displayed
             this.secondaryVideo.getElement().style.display = "none"
             
-            this.secondaryVideo.seek(this.video.getCurrentTime())
-            this.secondaryAudio.seek(this.video.getCurrentTime())
+            // Buffear ahead
+            const deltaT = 10 // [s]
+            const t1 = this.video.getCurrentTime()
 
+            this.secondaryVideo.seek(t1 + deltaT)
+            this.secondaryAudio.seek(t1 + deltaT)
+
+            // Start checking
             const interval = setInterval(() => {
                 const vState = this.secondaryVideo?.getReadyState() as number
                 const aState = this.secondaryAudio?.getReadyState() as number
 
-                if(vState >= 4 && aState >= 4){
+                if(this.video.getCurrentTime() > t1+deltaT && vState >= 4 && aState >= 4){
                     console.log("Ready to swap. Swapping...")
                     clearInterval(interval)
-                    this.video.pause()
-                    this.audio.pause()
-    
+            
                     this.secondaryVideo!.seek(this.video.getCurrentTime())
                     this.secondaryAudio!.seek(this.video.getCurrentTime())
+
+                    this.secondaryVideo!.play()
+                    this.secondaryAudio?.setVolume(0)
+                    this.secondaryAudio!.play()
+
+                    setTimeout(() => {
+                        this.secondaryAudio?.setVolume(1);
+                        this.secondaryVideo!.getElement().style.display = "unset"
+
+                        this.video.unmount()
+                        this.audio.unmount()
     
-                    this.video.unmount()
-                    this.audio.unmount()
-    
-                    this.video = this.secondaryVideo as Video
-                    this.audio = this.secondaryAudio as Audio
-                    this.secondaryAudio = null
-                    this.secondaryVideo = null
-                    
-                    this.video.getElement().style.display = "unset"
-    
-                    this.video.play()
-                    this.audio.play()
+                        this.video = this.secondaryVideo as Video
+                        this.audio = this.secondaryAudio as Audio
+                        this.secondaryAudio = null
+                        this.secondaryVideo = null
+                    }, 2000)
                 }else{console.log("Not ready to swap")}
             }, 500)
         }catch(err){

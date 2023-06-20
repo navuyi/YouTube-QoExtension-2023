@@ -21,12 +21,8 @@ const getURL = async (req:Request, res:Response, next:NextFunction) => {
         audioSource: bestAudio.url,
         videoSource: randomVideo.url
     })
+    console.log("Hello")
 }
-
-
-
-
-
 
 
 

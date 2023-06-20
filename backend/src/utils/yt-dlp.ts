@@ -5,7 +5,7 @@ export const getMediaSources = async (yt_url : string) : Promise<IMediaSource[]>
     const {stdout:raw} = await youtubedl.exec(yt_url, {
         skipDownload: true,
         listFormats:true,
-        dumpJson:true
+        dumpSingleJson:true
     }) 
 
     const openingCurlyBraceIndex = raw.indexOf("{")
