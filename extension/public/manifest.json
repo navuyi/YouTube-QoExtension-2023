@@ -1,10 +1,11 @@
 {
   "manifest_version": 3,
-  "name": "Web Extension Boilerplate",
-  "version": "1.1.0",
-  "description": "A simple chrome extension template with Vite, React, TypeScript and Tailwind CSS.",
+  "name": "YouTube QoExtension",
+  "version": "0.0.1",
+  "description": "Chrome extension for QoE experiment utilizing YouTube",
   "permissions": [
-    "tabs"
+    "tabs",
+    "debugger"
   ],
   "background": {
     "service_worker": "src/pages/background/index.js",

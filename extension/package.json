@@ -1,12 +1,12 @@
 {
-  "name": "vite-web-extension",
-  "displayName": "Web Extension Boilerplate",
-  "version": "1.1.0",
-  "description": "A simple chrome extension template with Vite, React, TypeScript and Tailwind CSS.",
+  "name": "youtube-qoe-extension",
+  "displayName": "YouTube QoExtension",
+  "version": "0.0.1",
+  "description": "Chrome extension for QoE experiment utilizing YouTube",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/JohnBra/web-extension.git"
+    "url": "https://github.com/navuyi/YouTube-QoExtension-2023"
   },
   "scripts": {
     "build": "vite build",
