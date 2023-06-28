@@ -1,16 +1,24 @@
-import { ExperimentSettings } from "."
+import { ExperimentSettings, ExperimentVariables, StorageDefault} from "."
 
 
-export class ChromeStorage {
+export class ChromeStorage<T> {
 
-    public static setItem = async <T>(key:keyof T, value:any) : Promise<void> => {
-        await chrome.storage.local.set({key, value})
+    public setItem = async (key:keyof T, value:any) : Promise<void> => {
+        const storageObject: { [k: string]: any } = {};
+        storageObject[key as string] = value;
+        await chrome.storage.local.set(storageObject);
     }
 
-    public static getItem = async <T>(key:keyof T) : Promise<any> => {
-        return await chrome.storage.local.get([key])
+    public getItem = async (key:keyof T) : Promise<any> => {
+        const result = await chrome.storage.local.get([key as string]);
+        return result[key as string];
     }
- }
+}
+
+export const VariablesStorage = new ChromeStorage<ExperimentVariables>()
+export const SettingsStorage = new ChromeStorage<ExperimentSettings>()
+
+
 
 
 

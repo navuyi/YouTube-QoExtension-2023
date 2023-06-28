@@ -1,7 +1,7 @@
 export interface ExperimentVariables {
     running: boolean
-    nextBitrateChange: Date | null
-    nextAssessment: Date | null
+    nextBitrateChange: string | null
+    nextAssessment: string | null
 }
 
 export interface ExperimentSettings {
@@ -12,15 +12,20 @@ export interface ExperimentSettings {
 }
 
 
-export const ExperimentVariablesDefault : ExperimentVariables = {
+const ExperimentVariablesDefault : ExperimentVariables = {
     running: false,
     nextBitrateChange: null,
     nextAssessment: null
 }
 
-export const ExperimentSettingsDefault : ExperimentSettings = {
+const ExperimentSettingsDefault : ExperimentSettings = {
     subjectAge: null,
     subjectID: null,
     subjectSex: null,
     bitrateScenario: null
+}
+
+export const StorageDefault = {
+    ...ExperimentVariablesDefault,
+    ... ExperimentSettingsDefault
 }

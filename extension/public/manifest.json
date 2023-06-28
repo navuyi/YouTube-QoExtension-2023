@@ -5,7 +5,8 @@
   "description": "Chrome extension for QoE experiment utilizing YouTube",
   "permissions": [
     "tabs",
-    "debugger"
+    "debugger",
+    "storage"
   ],
   "background": {
     "service_worker": "src/pages/background/index.js",

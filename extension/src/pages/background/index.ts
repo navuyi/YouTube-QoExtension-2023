@@ -1,7 +1,13 @@
 import { message } from "@src/types/messages"
+import { StorageDefault } from "@src/utils/storage"
 
-console.log("Extension loaded")
+chrome.runtime.onInstalled.addListener(async () => {
+    console.log("Extension loaded")
+    // Initialize local storage || WARNING --> THIS RESETS ALL chrome.storage KEYS TO DEFAULT VALUES
+    // await ChromeStorage.setDefault() // <-- it crashes the app
 
+    await chrome.storage.local.set(StorageDefault)
+})
 
 
 // Message listeners
