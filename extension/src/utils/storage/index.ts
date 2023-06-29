@@ -5,12 +5,9 @@ export interface ExperimentVariables {
 }
 
 export interface ExperimentSettings {
-    subjectID: number | null
-    subjectAge: number | null
-    subjectSex: "male" | "female" | "undisclosed" | null
     bitrateScenario: number[] | null
+    bitrateIntervalMs: number
 }
-
 
 const ExperimentVariablesDefault : ExperimentVariables = {
     running: false,
@@ -19,10 +16,8 @@ const ExperimentVariablesDefault : ExperimentVariables = {
 }
 
 const ExperimentSettingsDefault : ExperimentSettings = {
-    subjectAge: null,
-    subjectID: null,
-    subjectSex: null,
-    bitrateScenario: null
+    bitrateScenario: [10e3, 25e3, 5e3],
+    bitrateIntervalMs: 5000
 }
 
 export const StorageDefault = {

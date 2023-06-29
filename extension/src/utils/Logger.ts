@@ -1,3 +1,5 @@
+import { get_local_datetime } from "./datetime";
+
 export class Logger {
     private readonly prefix: string;
   
@@ -6,18 +8,15 @@ export class Logger {
     }
   
     public log = (message: string): void => {
-        const timestamp = new Date().toISOString();
-        console.log(`[${timestamp}] ${this.prefix}: ${message}`);
+        console.log(`[${get_local_datetime(new Date())}] ${this.prefix}: ${message}`);
     }
   
     public error = (message: string): void => {
-        const timestamp = new Date().toISOString();
-        console.error(`[${timestamp}] ${this.prefix}: ${message}`);
+        console.error(`[${get_local_datetime(new Date())}] ${this.prefix}: ${message}`);
     }
   
     public warn = (message: string): void => {
-        const timestamp = new Date().toISOString();
-        console.warn(`[${timestamp}] ${this.prefix}: ${message}`);
+        console.warn(`[${get_local_datetime(new Date())}] ${this.prefix}: ${message}`);
     }
   }
 

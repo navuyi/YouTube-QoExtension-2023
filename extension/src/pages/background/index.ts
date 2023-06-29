@@ -25,6 +25,9 @@ chrome.runtime.onMessage.addListener((msg:message, sender:chrome.runtime.Message
         if(sender.tab && sender.tab.id) /*no await*/ attach(sender.tab.id, sendResponse);
         else throw new Error("Cannot get tab ID and attach debugger");
     }  
+    else if(msg.flag === "NETWORK_THROTTLE"){
+        if(sender.tab && sender.tab.id) /*no await*/ throttleBandwidth(sender.tab.id, msg.data.bitrate, sendResponse)
+    }
 
     return true // <-- essential
 })
@@ -37,5 +40,18 @@ const attach = async (tabID:number, sendResponse) : Promise<void> => {
     }catch(error: any){
         sendResponse({flag: "DEBUGGER_ATTACH", msg: error.message})
     }
-    
+}
+
+const throttleBandwidth = async (tabID, bitrate, sendResponse) : Promise<void> => {
+    try{
+        await chrome.debugger.sendCommand({tabId: tabID}, "Network.emulateNetworkConditions", {
+            offline: false,
+            latency: 0,
+            downloadThroughput: bitrate,
+            uploadThroughput: 0
+        })
+        sendResponse({flag: "NETWORK_THROTTLE", msg: `Network bitrate set to ${bitrate} bps`} as message)
+    }catch(error:any){
+        sendResponse({flag: "NETWORK_THROTTLE", msg: error.message} as message)
+    }
 }

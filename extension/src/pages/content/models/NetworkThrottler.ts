@@ -1,12 +1,19 @@
 import { message } from "@src/types/messages"
 import { ExperimentVariables } from "@src/utils/storage"
-import { ChromeStorage } from "@src/utils/storage/ChromeStorage"
+import { ChromeStorage, SettingsStorage } from "@src/utils/storage/ChromeStorage"
 
 import { VariablesStorage } from "@src/utils/storage/ChromeStorage"
+import { Logger } from "@src/utils/Logger"
 
 export class NetworkThrottler {
     private static instance : NetworkThrottler | null = null
     private interval : ReturnType<typeof setInterval> | null = null
+
+    private bitrates : number[] | null = null
+    private bitrateIntervalMs : number | null = null
+    private bitrateIndex : number = 0
+
+    private logger : Logger = new Logger("[NetworkThrottler]")
 
     constructor(){
 
@@ -20,9 +27,17 @@ export class NetworkThrottler {
     }
 
     public init = async () : Promise<void> => {
+        // Get bitrate scenario
+        this.bitrates = await SettingsStorage.getItem("bitrateScenario")
+        this.bitrateIntervalMs = await SettingsStorage.getItem("bitrateIntervalMs")
+
+        this.logger.log(`Bitrate interval set to ${this.bitrateIntervalMs}`)
+        this.logger.log(`Bitrate setting: ${this.bitrates}`)
+
         // Attach debugger
         const msg:message = {flag: "DEBUGGER_ATTACH"}
-        const res = await chrome.runtime.sendMessage(msg)
+        const res : message = await chrome.runtime.sendMessage(msg)
+        console.log(`${res.flag} ${res.msg}`)
 
         // Check if next bitrate change is already scheduled
         const scheduled = await VariablesStorage.getItem("nextBitrateChange")
@@ -38,6 +53,7 @@ export class NetworkThrottler {
     }
 
     private start = () => {
+        if(! this.bitrateIntervalMs) throw new Error("Bitrate interval is unavailable")
         this.interval = setInterval(async () => {
             const next = new Date(JSON.parse(await VariablesStorage.getItem("nextBitrateChange")))
             const now = new Date()
@@ -45,12 +61,26 @@ export class NetworkThrottler {
                 this.executeBitrateChange()
                 await this.scheduleNextBitrateChange()
             }
-        }, 1000)
+        }, this.bitrateIntervalMs)
     }
 
-    private executeBitrateChange = () => {
+    private executeBitrateChange = async () => {
         console.log("Bitrate change")
-        // Execute bitrate change according to customizable scenario
+        if(!this.bitrates || this.bitrates.length === 0) throw new Error("Bitrates are unavailable")
+        const value = this.bitrates[this.bitrateIndex]
+
+        // Send command to change throttling value
+        const msg : message = {
+            flag: "NETWORK_THROTTLE",
+            data: {
+                bitrate: value
+            }
+        }
+        const res : message = await chrome.runtime.sendMessage(msg)
+        this.logger.log(res.msg!)
+
+        if(this.bitrateIndex < this.bitrates.length-1) this.bitrateIndex += 1;
+        else this.bitrateIndex = 0
     }
 
     private scheduleNextBitrateChange = async () => {
