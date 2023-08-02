@@ -20,8 +20,12 @@ export class MouseTracker{
     }
 
     private handleMousePressed = (e:MouseEvent) => {
-        if(e.type === "mousedown" && e.button === 0) this.leftButtonPressed = true;
-        else if(e.type === "mouseup" && e.button === 0) this.leftButtonPressed = false;
+        if(e.type === "mousedown" && e.button === 0) {
+            this.leftButtonPressed = true;
+        }
+        else if(e.type === "mouseup" && e.button === 0) {
+            this.leftButtonPressed = false;
+        }
     }
 
     private handleMouseMove = (e:MouseEvent) => {

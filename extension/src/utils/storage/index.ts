@@ -16,7 +16,7 @@ const ExperimentVariablesDefault : ExperimentVariables = {
 }
 
 const ExperimentSettingsDefault : ExperimentSettings = {
-    bitrateScenario: [10e3, 25e3, 5e3],
+    bitrateScenario: [200e3, 250e3, 500e3],
     bitrateIntervalMs: 5000
 }
 

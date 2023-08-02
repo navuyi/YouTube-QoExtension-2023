@@ -53,7 +53,9 @@ export class NetworkThrottler {
     }
 
     private start = () => {
-        if(! this.bitrateIntervalMs) throw new Error("Bitrate interval is unavailable")
+        if(!this.bitrateIntervalMs){
+            throw new Error("Bitrate interval is unavailable")
+        }
         this.interval = setInterval(async () => {
             const next = new Date(JSON.parse(await VariablesStorage.getItem("nextBitrateChange")))
             const now = new Date()

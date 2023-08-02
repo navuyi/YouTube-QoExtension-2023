@@ -1,4 +1,4 @@
-import { get_local_datetime } from "./datetime";
+import { DateTime } from "luxon";
 
 export class Logger {
     private readonly prefix: string;
@@ -8,15 +8,15 @@ export class Logger {
     }
   
     public log = (message: string): void => {
-        console.log(`[${get_local_datetime(new Date())}] ${this.prefix}: ${message}`);
+        console.log(`[${DateTime.now().toISO()}] ${this.prefix}: ${message}`);
     }
   
     public error = (message: string): void => {
-        console.error(`[${get_local_datetime(new Date())}] ${this.prefix}: ${message}`);
+        console.error(`[${DateTime.now().toISO()}] ${this.prefix}: ${message}`);
     }
   
     public warn = (message: string): void => {
-        console.warn(`[${get_local_datetime(new Date())}] ${this.prefix}: ${message}`);
+        console.warn(`[${DateTime.now().toISO()}] ${this.prefix}: ${message}`);
     }
   }
 
