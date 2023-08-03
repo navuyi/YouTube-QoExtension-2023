@@ -50,7 +50,7 @@ const manifest: Manifest.WebExtensionManifest = {
       matches: [],
     },
     {
-      resources: ['playerUI.html'],
+      resources: ['qualityScoreUI.html'],
       matches: ['<all_urls>'],
     }
   ],

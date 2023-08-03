@@ -1,18 +1,20 @@
 import { MouseTracker } from "./models/MouseTracker";
 import { NetworkThrottler } from "./models/NetworkThrottler";
-import { DebugDataMonitor } from "./models/DebugDataMonitor";
-
+import { DebugDataMonitor } from "./models/video/DebugDataMonitor";
+import { VideoController } from "./models/video/VideoController";
 
 const debugDataMonitor = new DebugDataMonitor()
 
+const videoController = new VideoController()
+
 window.addEventListener('yt-page-data-updated', (e) => {
   console.log("yt-page-data-updated")
-  debugDataMonitor.start() // <-- start the nerd stats monitoring
+  videoController.start()
 });
 
 window.addEventListener('yt-navigate-start', (e) => {
   console.log("yt-navigate-start")
-  debugDataMonitor.stop() // <-- stop the nerd stats monitoring
+  videoController.stop()
 });
 
 window.addEventListener('load', function () {
@@ -20,8 +22,9 @@ window.addEventListener('load', function () {
 });
 
 
+
 const mouseTracker = MouseTracker.getInstance()
-mouseTracker.init()
+//mouseTracker.init()
 
 const throttler = NetworkThrottler.getInstance()
 throttler.init()

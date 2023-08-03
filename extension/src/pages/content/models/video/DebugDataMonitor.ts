@@ -1,5 +1,6 @@
 import { Logger } from "@src/utils/Logger"
-
+import { DebugDataChunk } from "@src/types/debugData.type"
+import { DebugDataElements } from "@src/types/debugData.type"
 
 
 const HtmlQueryElements = {
@@ -9,73 +10,49 @@ const HtmlQueryElements = {
     playerDebugDataContent: ".html5-video-info-panel-content" // <-- class
 }
 
-interface DebugDataElements {
-    videoIDsCPN: HTMLSpanElement
-    viewportFrames: HTMLSpanElement
-    currentOptimalRes: HTMLSpanElement
-    volumeNormalized: HTMLSpanElement
-    codecs: HTMLSpanElement
-    color: HTMLSpanElement
-    connectionSpeed: HTMLSpanElement
-    networkActivity: HTMLSpanElement
-    bufferHealth: HTMLSpanElement
-    mysteryText: HTMLSpanElement
-    date: HTMLSpanElement
-}
-
-interface DebugDataChunk  {
-    videoID: string | null
-    sCPN: string | null
-    viewport: string | null
-    droppedFrames: string | null
-    totalFrames: string | null
-    currentResolution: string | null
-    optimalResolution: string | null
-    volume: string | null
-    normalizedVolume: string | null
-    codecs: string | null
-    color: string | null
-    connectionSpeed: string | null
-    networkActivity: string | null
-    bufferHealth: string | null
-    mysteryText: string | null
-    date: string | null
-}
-
 export class DebugDataMonitor {
     private logger : Logger = new Logger("[NetworkThrottler]")
     private debugDataElements : DebugDataElements | null = null
     private interval : ReturnType<typeof setInterval> | null = null
 
-    constructor() {
+    constructor() {}
 
-    }
-
-    public start = () : void => {
-        console.log(location.href)
+    public init = () : void => {
         if(location.href.includes("https://www.youtube.com/watch?v=") === false){
-            this.logger.log("debug stats monitoring not started because the current page is not a video page")
+            this.stop()
             return
         }
-        this.logger.log("Starting debug stats monitoring")
         
+        // Check if the debug stats are already opened
         const playerDebugDataContainer = document.querySelector(HtmlQueryElements.playerDebugDataContainer) as HTMLElement
-        if(playerDebugDataContainer){
-            console.log("debug stats already opened")
-        }else{
-            console.log("Initializing")
+        if(!playerDebugDataContainer){
             this.openDebugMenu()
             this.getDebugDataElements()
         }
+
+        // Start debug data aanlysis
+        if(this.interval){
+            this.stop()
+            this.start()
+        }else{
+            this.start()
+        }
+    }
+
+    /**
+     * Starts monitoring the debug data by periodically analyzing it.
+     * @returns {void}
+     */
+    private start = () : void => {
         this.interval = setInterval(() => {
             this.analyze()
-        }, 1000)
+        }, 250)
     }
 
     public stop = () : void=> {
-        this.logger.log("Stopping debug stats monitoring")
         if(this.interval){
             clearInterval(this.interval)
+            this.interval = null    // <-- nulling the interval 
         }
     }
 
@@ -106,13 +83,13 @@ export class DebugDataMonitor {
                 chunk[key] = chunk[key].trimStart().trimEnd()
             }
         }
-        console.log(chunk)
+        console.log("Analyzing")
     }
 
     private getDebugDataElements = ()  => {
         const container = document.querySelector(HtmlQueryElements.playerDebugDataContent) as HTMLElement
         const content = container.children
-        console.log(content)
+
         this.debugDataElements = {
             videoIDsCPN: content[0].querySelector("span") as HTMLSpanElement,
             viewportFrames: content[1].querySelector("span") as HTMLSpanElement,
@@ -126,8 +103,6 @@ export class DebugDataMonitor {
             mysteryText: content[14].querySelector("span") as HTMLSpanElement,
             date: content[16].querySelector("span") as HTMLSpanElement,
         }
-
-        console.log(this.debugDataElements)
     }
 
     private openDebugMenu = () : void => {

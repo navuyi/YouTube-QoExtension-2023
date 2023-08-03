@@ -23,7 +23,7 @@ export default defineConfig({
     react(), 
     makeManifest(), 
     copyContentStyle(),
-    copyResource(["src", "templates", "playerUI.html"], "playerUI.html")
+    copyResource(["src", "templates", "qualityScoreUI.html"], "qualityScoreUI.html")
   ],
   publicDir,
   build: {
