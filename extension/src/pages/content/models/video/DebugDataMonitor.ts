@@ -18,11 +18,6 @@ export class DebugDataMonitor {
     constructor() {}
 
     public init = () : void => {
-        if(location.href.includes("https://www.youtube.com/watch?v=") === false){
-            this.stop()
-            return
-        }
-        
         // Check if the debug stats are already opened
         const playerDebugDataContainer = document.querySelector(HtmlQueryElements.playerDebugDataContainer) as HTMLElement
         if(!playerDebugDataContainer){
@@ -30,19 +25,14 @@ export class DebugDataMonitor {
             this.getDebugDataElements()
         }
 
-        // Start debug data aanlysis
-        if(this.interval){
-            this.stop()
-            this.start()
-        }else{
-            this.start()
-        }
+        this.stop()
+        this.start()
     }
-
+    
     /**
      * Starts monitoring the debug data by periodically analyzing it.
      * @returns {void}
-     */
+    */
     private start = () : void => {
         this.interval = setInterval(() => {
             this.analyze()
