@@ -1,10 +1,9 @@
-
-
-
+import { Logger } from "@src/utils/Logger"
 
 export class VideoEventsMonitor {
     private video : HTMLVideoElement | null = null
     private interval : ReturnType<typeof setInterval> | null = null
+    private logger : Logger = new Logger("[VideoEventsMonitor]", true)
 
     constructor(){
 
@@ -31,20 +30,23 @@ export class VideoEventsMonitor {
             }, 50)
     
             this.video.onpause = (e) => {
-                console.log(e)
-                console.log("PAUSE")
+                this.logger.log("PAUSED")
             }
 
             this.video.onseeking = (e) => {
-                console.log("SEEKING")
+                this.logger.log("SEEKING")
             }
     
             this.video.onseeked = (e) => {
-                console.log("SEEKED")
+                this.logger.log("SEEKED")
             }
 
             this.video.onplaying = (e) => {
-                console.log("PLAYING")
+                this.logger.log("PLAYING")
+            }
+
+            this.video.onfullscreenchange = (e) => {
+                this.logger.log("FULLSCREEN CHANGE")
             }
         }else{
             throw new Error("Video element unavailable")
@@ -84,7 +86,7 @@ export class VideoEventsMonitor {
     private checkBuffering = () : void => {
         const isBuffering = !this.isPlayerInBuffer()
         if(isBuffering === true){
-            console.log("BUFFERING")
+            this.logger.log("BUFFERING")
         }
     }
 }

@@ -42,7 +42,7 @@ window.addEventListener('load', function () {
 
 
 const mouseTracker = MouseTracker.getInstance()
-//mouseTracker.init()
+mouseTracker.init()
 
 const throttler = NetworkThrottler.getInstance()
 throttler.init()

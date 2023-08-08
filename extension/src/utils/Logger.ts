@@ -1,22 +1,30 @@
 import { DateTime } from "luxon";
 
 export class Logger {
-    private readonly prefix: string;
+    private readonly prefix: string
+    private readonly enabled: boolean 
   
-    constructor(prefix: string) {
+    constructor(prefix: string, enabled:boolean=true) {
       this.prefix = prefix;
+      this.enabled = enabled;
     }
   
     public log = (message: string): void => {
-        console.log(`[${DateTime.now().toISO()}] ${this.prefix}: ${message}`);
+        if (this.enabled) {
+            console.log(`[${DateTime.now().toISO()}] ${this.prefix}: ${message}`);
+        }
     }
   
     public error = (message: string): void => {
-        console.error(`[${DateTime.now().toISO()}] ${this.prefix}: ${message}`);
+        if (this.enabled) {
+            console.error(`[${DateTime.now().toISO()}] ${this.prefix}: ${message}`);
+        }
     }
   
     public warn = (message: string): void => {
-        console.warn(`[${DateTime.now().toISO()}] ${this.prefix}: ${message}`);
+        if (this.enabled) {
+            console.warn(`[${DateTime.now().toISO()}] ${this.prefix}: ${message}`);
+        }
     }
   }
 

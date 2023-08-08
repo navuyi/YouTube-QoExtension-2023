@@ -11,7 +11,7 @@ const HtmlQueryElements = {
 }
 
 export class DebugDataMonitor {
-    private logger : Logger = new Logger("[NetworkThrottler]")
+    private logger : Logger = new Logger("[NetworkThrottler]", false)
     private debugDataElements : DebugDataElements | null = null
     private interval : ReturnType<typeof setInterval> | null = null
 
@@ -73,7 +73,7 @@ export class DebugDataMonitor {
                 chunk[key] = chunk[key].trimStart().trimEnd()
             }
         }
-        console.log("Analyzing")
+        this.logger.log("Analyzing...")
     }
 
     private getDebugDataElements = ()  => {
