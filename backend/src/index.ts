@@ -1,15 +1,12 @@
-import * as express from "express"
-import * as cors from "cors"
-import urlRouter from "./routes/url"
+import "reflect-metadata" // Note this import related to typeORM
+import { createApp } from "./app"
 
-const app = express()
 
-app.use(cors({
-    origin: ["https://www.youtube.com"]
-}))
-app.use("/yt", urlRouter)
 
-const PORT = 8080
-app.listen(PORT, () => {
-    console.log(`Listening on ${PORT}`)
-})
+export const app = createApp()
+
+
+
+
+
+
