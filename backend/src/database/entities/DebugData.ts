@@ -6,6 +6,9 @@ export class DebugData {
   @PrimaryGeneratedColumn()
   id: number
 
+  @Column()
+  sessionID: string // <-- this is the ID generated on every video enter, can use select distinct to get all video sessions
+
   @Column({ nullable: true })
   videoID: string
 

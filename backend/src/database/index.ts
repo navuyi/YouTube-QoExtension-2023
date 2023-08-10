@@ -16,7 +16,7 @@ export const AppDataSource = new DataSource({
       ? './src/database/database.test.sqlite'
       : './src/database/database.sqlite',
   synchronize: true, // <-- DO NOT USE IN PRODUCTION
-  logging: true,
+  logging: false,
   entities: [Experiment, DebugData, MouseEvent, VideoPlayerEvent], // <-- all entities have to be imported
   subscribers: [],
   migrations: [],

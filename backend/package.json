@@ -37,6 +37,7 @@
     "socket.io": "^4.7.1",
     "sqlite3": "^5.1.6",
     "supertest": "^6.3.3",
-    "typeorm": "^0.3.17"
+    "typeorm": "^0.3.17",
+    "winston": "^3.10.0"
   }
 }
