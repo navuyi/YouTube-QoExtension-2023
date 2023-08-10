@@ -69,6 +69,6 @@ export class MouseEvent {
   @Column()
   timestamp: string
 
-  @ManyToOne(() => Experiment, (experiment) => experiment.mouseEvents)
+  @ManyToOne(() => Experiment, (experiment) => experiment.mouseEvents, { nullable: true }) // ! LATER ! Set nullable to FALSE later
   experiment: Experiment
 }

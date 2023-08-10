@@ -15,6 +15,6 @@ export class VideoPlayerEvent {
   @Column()
   timestamp: string
 
-  @ManyToOne(() => Experiment, (experiment) => experiment.videoPlayerEvents)
+  @ManyToOne(() => Experiment, (experiment) => experiment.videoPlayerEvents, { nullable: true }) // ! LATER ! Set nullable to FALSE later
   experiment: Experiment
 }

@@ -60,6 +60,6 @@ export class DebugData {
   @Column({ nullable: true })
   timestmap: string
 
-  @ManyToOne(() => Experiment, (experiment) => experiment.debugData)
+  @ManyToOne(() => Experiment, (experiment) => experiment.debugData, { nullable: true }) //! LATER ! Set nullable to FALSE later
   experiment: Experiment
 }
