@@ -1,15 +1,15 @@
-import react from '@vitejs/plugin-react-swc';
-import path, { resolve } from "path";
-import { defineConfig } from 'vite';
-import copyContentStyle from './utils/plugins/copy-content-style';
-import makeManifest from './utils/plugins/make-manifest';
-import copyResource from './utils/plugins/copy-resource';
+import react from '@vitejs/plugin-react-swc'
+import path, { resolve } from 'path'
+import { defineConfig } from 'vite'
+import copyContentStyle from './utils/plugins/copy-content-style'
+import makeManifest from './utils/plugins/make-manifest'
+import copyResource from './utils/plugins/copy-resource'
 
-const root = resolve(__dirname, 'src');
-const pagesDir = resolve(root, 'pages');
-const assetsDir = resolve(root, 'assets');
-const outDir = resolve(__dirname, 'dist');
-const publicDir = resolve(__dirname, 'public');
+const root = resolve(__dirname, 'src')
+const pagesDir = resolve(root, 'pages')
+const assetsDir = resolve(root, 'assets')
+const outDir = resolve(__dirname, 'dist')
+const publicDir = resolve(__dirname, 'public')
 
 export default defineConfig({
   resolve: {
@@ -20,10 +20,10 @@ export default defineConfig({
     },
   },
   plugins: [
-    react(), 
-    makeManifest(), 
+    react(),
+    makeManifest(),
     copyContentStyle(),
-    copyResource(["src", "templates", "qualityScoreUI.html"], "qualityScoreUI.html")
+    copyResource(['src', 'templates', 'qualityScoreUI.html'], 'qualityScoreUI.html'),
   ],
   publicDir,
   build: {
@@ -36,14 +36,14 @@ export default defineConfig({
         //panel: resolve(pagesDir, 'panel', 'index.html'),
         content: resolve(pagesDir, 'content', 'index.ts'),
         background: resolve(pagesDir, 'background', 'index.ts'),
+        setup: resolve(pagesDir, 'setup', 'index.html'),
         //popup: resolve(pagesDir, 'popup', 'index.html'),
         //newtab: resolve(pagesDir, 'newtab', 'index.html'),
         //options: resolve(pagesDir, 'options', 'index.html'),
       },
       output: {
-        entryFileNames: (chunk) => `src/pages/${chunk.name}/index.js`
-      }
-    }
+        entryFileNames: (chunk) => `src/pages/${chunk.name}/index.js`,
+      },
+    },
   },
-});
-
+})
