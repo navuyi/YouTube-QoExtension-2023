@@ -10,7 +10,8 @@
   },
   "scripts": {
     "build": "vite build",
-    "dev": "nodemon"
+    "dev": "nodemon",
+    "start": "nodemon"
   },
   "type": "module",
   "dependencies": {
@@ -18,6 +19,7 @@
     "luxon": "^3.4.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-router-dom": "^6.15.0",
     "sass": "^1.63.4",
     "uuid": "^9.0.0",
     "webextension-polyfill": "^0.10.0"

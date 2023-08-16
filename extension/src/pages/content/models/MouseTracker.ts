@@ -1,3 +1,6 @@
+import { api } from '@src/API/api'
+import { PostMouseEventRequestBody } from '@backend/controlers/postMouseEvent'
+
 export interface MouseEventData {
   pageX: number
   pageY: number
@@ -79,9 +82,13 @@ export class MouseTracker {
     }
   }
 
-  private handleMouseEvent = (e: MouseEvent, type: CustomMouseEventType) => {
+  private handleMouseEvent = async (e: MouseEvent, type: CustomMouseEventType) => {
     const target = e.target as HTMLElement
-    const data: MouseEventData = {
+    const experimentID = 1 //TODO: get the experiment ID
+
+    const data: PostMouseEventRequestBody = {
+      experimentID: experimentID,
+
       pageX: e.pageX,
       pageY: e.pageY,
       screenX: e.screenX,
@@ -106,5 +113,6 @@ export class MouseTracker {
         baseURI: target.baseURI,
       },
     }
+    await api.mouseEvent.post(data)
   }
 }

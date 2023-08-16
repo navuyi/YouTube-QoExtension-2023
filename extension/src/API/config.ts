@@ -8,4 +8,7 @@ export const API_ENDPOINTS = {
   debugDatum: {
     post: `${URL_BASE}/debugDatum`,
   },
+  mouseEvent: {
+    post: `${URL_BASE}/mouseEvent`,
+  },
 }
