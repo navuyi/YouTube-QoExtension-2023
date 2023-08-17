@@ -1,92 +1,98 @@
-import { api } from '@src/API/api'
-import { PostMouseEventRequestBody } from '@backend/controlers/postMouseEvent'
+import { api } from '../../../API/api';
 
 export interface MouseEventData {
-  pageX: number
-  pageY: number
-  screenX: number
-  screenY: number
-  offsetX: number
-  offsetY: number
-  clientX: number
-  clientY: number
+  pageX: number;
+  pageY: number;
+  screenX: number;
+  screenY: number;
+  offsetX: number;
+  offsetY: number;
+  clientX: number;
+  clientY: number;
 
-  scrollX: number
-  scrollY: number
+  scrollX: number;
+  scrollY: number;
 
-  type: CustomMouseEventType
-  url: string
-  timestamp: string
+  type: CustomMouseEventType;
+  url: string;
+  timestamp: string;
 
   element: {
-    className: string
-    tag: string
-    id: string
-    outerHTML: string
-    outerText: string
+    className: string;
+    tag: string;
+    id: string;
+    outerHTML: string;
+    outerText: string;
 
-    innerHTML: string
-    innerText: string
+    innerHTML: string;
+    innerText: string;
 
-    baseURI: string
-  }
+    baseURI: string;
+  };
 }
 export interface ScrollEventData {
-  scrollX: number
-  scrollY: number
+  scrollX: number;
+  scrollY: number;
 }
-export type CustomMouseEventType = 'mousedown' | 'mouseup' | 'mousemove' | 'drag'
+export type CustomMouseEventType =
+  | 'mousedown'
+  | 'mouseup'
+  | 'mousemove'
+  | 'drag';
 
 export class MouseTracker {
-  private static instance: MouseTracker | null = null
-  private leftButtonPressed: boolean = false
+  private static instance: MouseTracker | null = null;
+  private leftButtonPressed: boolean = false;
 
   private constructor() {}
 
   public static getInstance = () => {
     if (!MouseTracker.instance) {
-      MouseTracker.instance = new MouseTracker()
+      MouseTracker.instance = new MouseTracker();
     }
-    return MouseTracker.instance
-  }
+    return MouseTracker.instance;
+  };
 
   public init = () => {
-    window.onmousedown = this.handleMousePressed.bind(this)
-    window.onmouseup = this.handleMousePressed.bind(this)
-    window.onmousemove = this.handleMouseMove.bind(this)
-    window.onscroll = this.handleScroll.bind(this)
-  }
+    window.onmousedown = this.handleMousePressed.bind(this);
+    window.onmouseup = this.handleMousePressed.bind(this);
+    window.onmousemove = this.handleMouseMove.bind(this);
+    window.onscroll = this.handleScroll.bind(this);
+  };
 
   private handleMousePressed = (e: MouseEvent) => {
     if (e.type === 'mousedown' && e.button === 0) {
-      this.leftButtonPressed = true
-      this.handleMouseEvent(e, 'mousedown')
+      this.leftButtonPressed = true;
+      this.handleMouseEvent(e, 'mousedown');
     } else if (e.type === 'mouseup' && e.button === 0) {
-      this.leftButtonPressed = false
-      this.handleMouseEvent(e, 'mouseup')
+      this.leftButtonPressed = false;
+      this.handleMouseEvent(e, 'mouseup');
     }
-  }
+  };
 
   private handleMouseMove = (e: MouseEvent) => {
     if (this.leftButtonPressed === true) {
-      this.handleMouseEvent(e, 'drag')
+      this.handleMouseEvent(e, 'drag');
     } else {
-      this.handleMouseEvent(e, 'mousemove')
+      this.handleMouseEvent(e, 'mousemove');
     }
-  }
+  };
 
   private handleScroll = (e: Event) => {
     const data: ScrollEventData = {
       scrollX: window.scrollX,
       scrollY: window.scrollY,
-    }
-  }
+    };
+  };
 
-  private handleMouseEvent = async (e: MouseEvent, type: CustomMouseEventType) => {
-    const target = e.target as HTMLElement
-    const experimentID = 1 //TODO: get the experiment ID
+  private handleMouseEvent = async (
+    e: MouseEvent,
+    type: CustomMouseEventType
+  ) => {
+    const target = e.target as HTMLElement;
+    const experimentID = 1; //TODO: get the experiment ID
 
-    const data: PostMouseEventRequestBody = {
+    const data: any = {
       experimentID: experimentID,
 
       pageX: e.pageX,
@@ -112,7 +118,7 @@ export class MouseTracker {
         innerText: target.innerText,
         baseURI: target.baseURI,
       },
-    }
-    await api.mouseEvent.post(data)
-  }
+    };
+    await api.mouseEvent.post(data);
+  };
 }
