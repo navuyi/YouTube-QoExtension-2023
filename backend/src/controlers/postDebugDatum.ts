@@ -30,7 +30,6 @@ export const postDebugDatum = async (req: Request, res: Response, next: NextFunc
   try {
     const data = req.body as PostDebugDatumRequestBody
     const debugDatum = await DebugDataRepository.createAndSave(data as DebugData)
-
     res.status(201).json()
   } catch (err) {
     next(err)

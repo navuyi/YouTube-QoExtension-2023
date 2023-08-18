@@ -32,7 +32,7 @@ export const createApp = async (): Promise<App> => {
   app.use(express.json())
 
   // Middlewares
-  app.use(requestLogger)
+  //app.use(requestLogger)
 
   // Endpoints
   app.use('/', commonRouter)

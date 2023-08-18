@@ -1,5 +1,11 @@
-import { CSSProperties } from 'react'
+import { CSSProperties } from 'react';
 
 export interface Style {
-  [key: string]: CSSProperties
+  [key: string]: CSSProperties;
 }
+
+export const fullViewport: CSSProperties = {
+  width: '100%',
+  minHeight: '100vh',
+  margin: 0,
+};

@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
-  "name": "YourNetflixOurLab",
-  "description": "AGH-TUFIQoE-2023 Netflix Experiment || Chrome Extension by Rafal Figlus",
+  "name": "YouTube QoExtension",
+  "description": "AGH-TUFIQoE-2023 YouTube Experiment || Chrome Extension by Rafal Figlus",
   "background": {
     "service_worker": "background.bundle.js"
   },
@@ -32,7 +32,14 @@
       "matches": ["<all_urls>"]
     }
   ],
-  "host_permissions": [],
+  "content_scripts": [
+    {
+      "matches": ["https://www.youtube.com/*"],
+      "js": ["content.bundle.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "host_permissions": ["http://127.0.0.1/*"],
   "permissions": [
     "scripting",
     "tabs",

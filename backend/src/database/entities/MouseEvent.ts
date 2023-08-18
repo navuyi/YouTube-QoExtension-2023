@@ -42,29 +42,13 @@ export class MouseEvent {
   @Column()
   url: string
 
-  @Column()
-  elementClassName: string
-
-  @Column()
-  elementTag: string
-
-  @Column()
-  elementId: string
-
-  @Column()
-  elementOuterHTML: string
-
-  @Column()
-  elementOuterText: string
-
-  @Column()
-  elementInnerHTML: string
-
-  @Column()
-  elementInnerText: string
-
-  @Column()
-  elementBaseURI: string
+  @Column('simple-json', { nullable: true })
+  element: {
+    className: string | null
+    tag: string | null
+    id: string | null
+    baseURI: string | null
+  }
 
   @Column()
   timestamp: string

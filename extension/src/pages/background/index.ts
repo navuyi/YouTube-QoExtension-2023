@@ -12,7 +12,7 @@ chrome.runtime.onInstalled.addListener(async () => {
 chrome.action.onClicked.addListener(async (tab) => {
   if (tab && tab.id) {
     await chrome.tabs.update(tab.id, {
-      url: 'src/pages/setup/index.html',
+      url: 'setup.html',
     });
   }
 });

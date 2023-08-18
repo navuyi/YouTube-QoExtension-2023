@@ -38,14 +38,12 @@ var options = {
 
   entry: {
     //break: path.join(__dirname, 'src', 'pages', 'Break', 'index.tsx'),
-
-    //setup: path.join(__dirname, 'src', 'pages', 'Setup', 'index.tsx'),
-
     //popup: path.join(__dirname, 'src', 'pages', 'Popup', 'index.jsx'),
+    setup: path.join(__dirname, 'src', 'pages', 'Setup', 'index.tsx'),
     background: path.join(__dirname, 'src', 'pages', 'Background', 'index.ts'),
 
     // What happens here is described in README.md, content scripts require extra preparation
-    content: path.join(__dirname, 'src', 'pages', 'Content', 'index.ts'), // ContentScript responsible for
+    content: path.join(__dirname, 'src', 'pages', 'Content', 'index.ts'),
 
     /*
     options: path.join(__dirname, 'src', 'pages', 'Options', 'index.jsx'),
@@ -218,6 +216,12 @@ var options = {
         },
       ],
     }),
+    new HtmlWebpackPlugin({
+      template: path.join(__dirname, 'src', 'pages', 'Setup', 'index.html'),
+      filename: 'setup.html',
+      chunks: ['setup'],
+      cache: false,
+    }),
     /*
     new HtmlWebpackPlugin({
       template: path.join(__dirname, 'src', 'pages', 'Break', 'index.html'),
@@ -225,12 +229,7 @@ var options = {
       chunks: ['break'],
       cache: false,
     }),
-    new HtmlWebpackPlugin({
-      template: path.join(__dirname, 'src', 'pages', 'Setup', 'index.html'),
-      filename: 'setup.html',
-      chunks: ['setup'],
-      cache: false,
-    }),
+    
     new HtmlWebpackPlugin({
       template: path.join(__dirname, 'src', 'pages', 'Popup', 'index.html'),
       filename: 'popup.html',

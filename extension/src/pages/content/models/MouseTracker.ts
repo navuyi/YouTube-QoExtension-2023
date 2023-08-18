@@ -1,4 +1,5 @@
 import { api } from '../../../API/api';
+import { VariablesStorage } from '../../../utils/storage/ChromeStorage';
 
 export interface MouseEventData {
   pageX: number;
@@ -21,12 +22,6 @@ export interface MouseEventData {
     className: string;
     tag: string;
     id: string;
-    outerHTML: string;
-    outerText: string;
-
-    innerHTML: string;
-    innerText: string;
-
     baseURI: string;
   };
 }
@@ -74,7 +69,7 @@ export class MouseTracker {
     if (this.leftButtonPressed === true) {
       this.handleMouseEvent(e, 'drag');
     } else {
-      this.handleMouseEvent(e, 'mousemove');
+      //this.handleMouseEvent(e, 'mousemove'); // <-- not sending mousemove update due to high load
     }
   };
 
@@ -90,7 +85,7 @@ export class MouseTracker {
     type: CustomMouseEventType
   ) => {
     const target = e.target as HTMLElement;
-    const experimentID = 1; //TODO: get the experiment ID
+    const experimentID = await VariablesStorage.getItem('experimentID');
 
     const data: any = {
       experimentID: experimentID,
@@ -112,13 +107,13 @@ export class MouseTracker {
         className: target.className,
         tag: target.tagName,
         id: target.id,
-        outerHTML: target.outerHTML,
-        outerText: target.outerText,
-        innerHTML: target.innerHTML,
-        innerText: target.innerText,
         baseURI: target.baseURI,
       },
     };
-    await api.mouseEvent.post(data);
+    try {
+      api.mouseEvent.post(data);
+    } catch (err) {
+      console.log('Error sending mouse data!');
+    }
   };
 }

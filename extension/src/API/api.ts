@@ -3,7 +3,7 @@ import axios from 'axios';
 
 export const api = {
   debugData: {
-    post: async (data: PostDebugDatumRequestBody) => {
+    post: async (data: object) => {
       try {
         const response = await axios.post(API_ENDPOINTS.debugDatum.post, data);
         return response.data;
@@ -13,7 +13,7 @@ export const api = {
     },
   },
   experiment: {
-    post: async (data: PostExperimentRequestBody) => {
+    post: async (data: object) => {
       try {
         const response = await axios.post(API_ENDPOINTS.experiment.post, data);
         return response.data;
@@ -21,9 +21,19 @@ export const api = {
         throw err;
       }
     },
+    id: {
+      get: async (): Promise<number> => {
+        try {
+          const response = await axios.get(API_ENDPOINTS.experiment.id.get);
+          return response.data.nextExperimentID;
+        } catch (err) {
+          throw err;
+        }
+      },
+    },
   },
   mouseEvent: {
-    post: async (data: PostMouseEventRequestBody) => {
+    post: async (data: object) => {
       try {
         const response = await axios.post(API_ENDPOINTS.mouseEvent.post, data);
         return response.data;

@@ -10,11 +10,12 @@ export const ExperimentRepository = AppDataSource.getRepository(Experiment).exte
     return await ExperimentRepository.findOneBy({ id: id })
   },
   getNextId: async () => {
-    const lastExperiment = await ExperimentRepository.findOne({
+    const lastExperiment = await ExperimentRepository.find({
       order: {
         id: 'DESC',
       },
-    })
+      take: 1,
+    })[0]
     return lastExperiment ? lastExperiment.id + 1 : 1
   },
 })

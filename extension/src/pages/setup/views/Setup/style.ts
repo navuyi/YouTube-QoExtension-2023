@@ -1,10 +1,12 @@
-import { CSSProperties } from 'react';
 import { Style } from '../../../../config/style';
+import { fullViewport } from '../../../../config/style';
 
 export const style: Style = {
   setup: {
-    flex: 1,
-    backgroundColor: 'red',
-    height: '100vh',
+    ...fullViewport,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 };

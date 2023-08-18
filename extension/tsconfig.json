@@ -1,42 +1,21 @@
 {
   "compilerOptions": {
-    "noImplicitAny": false,
-    "useDefineForClassFields": true,
-    "target": "ES2020",
-    "types": ["chrome", "node"],
+    "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": false,
-
-    //"skipLibCheck": true,
+    "allowJs": true,
+    "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    //"strict": true,
-    "forceConsistentCasingInFileNames": true,
-    //"noFallthroughCasesInSwitch": true,
-    "module": "esnext",
-    //"moduleResolution": "node",
-    //"resolveJsonModule": true,
-    //"noEmit": true,
-    //"jsx": "react-jsx"
-
-    /* Bundler mode */
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx",
-
-    /* Linting */
     "strict": true,
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
+    "noImplicitAny": false,
+    "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
-    "paths": {
-      "@backend/*": ["../backend/src/*"]
-    }
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "noEmit": false,
+    "jsx": "react"
   },
-
-  "include": ["src"]
-  //"exclude": ["build", "node_modules"]
+  "include": ["src"],
+  "exclude": ["build", "node_modules"]
 }

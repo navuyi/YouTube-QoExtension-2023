@@ -1,7 +1,7 @@
 {
-  "name": "your-netflix-our-lab-netflix-qoe-experiment",
+  "name": "your-youtube-our-lab",
   "version": "4.3.5",
-  "description": "TUFIQoE ecologically valid qoe experiment based on Netflix streaming platform - extension",
+  "description": "TUFIQoE ecologically valid qoe experiment based YouTube",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -14,7 +14,10 @@
     "test": "npx jest"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
     "@hot-loader/react-dom": "^17.0.2",
+    "@mui/material": "^5.14.5",
     "@types/react-redux": "^7.1.25",
     "axios": "^1.4.0",
     "luxon": "^3.4.0",
