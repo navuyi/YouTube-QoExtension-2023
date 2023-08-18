@@ -8,9 +8,7 @@
     "lib": ["es2022", "dom"],
     "esModuleInterop": false,
     "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "isolatedModules": true,
-    "baseUrl": "./"
+    "experimentalDecorators": true
   },
   "include": ["src/**/*.ts", "jest.config.js", "src/database"],
   "exclude": ["node_modules"]
