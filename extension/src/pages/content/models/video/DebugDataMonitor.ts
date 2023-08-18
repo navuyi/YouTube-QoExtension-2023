@@ -4,6 +4,7 @@ import { DebugDataElements } from '../../../../types/debugData.type';
 import { DateTime } from 'luxon';
 import { v4 as uuidv4 } from 'uuid';
 import { api } from '../../../../API/api';
+import { PostDebugDatumRequestBody } from '@backend/controlers/postDebugDatum';
 
 const HtmlQueryElements = {
   video: 'video', // <-- tag
