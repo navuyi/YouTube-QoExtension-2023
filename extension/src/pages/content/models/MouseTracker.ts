@@ -1,47 +1,14 @@
 import { DateTime } from 'luxon';
 import { api } from '../../../API/api';
 import { VariablesStorage } from '../../../utils/storage/ChromeStorage';
-
-export interface MouseEventData {
-  pageX: number;
-  pageY: number;
-  screenX: number;
-  screenY: number;
-  offsetX: number;
-  offsetY: number;
-  clientX: number;
-  clientY: number;
-
-  scrollX: number;
-  scrollY: number;
-
-  type: CustomMouseEventType;
-  url: string;
-  timestamp: string;
-
-  element: {
-    className: string;
-    tag: string;
-    id: string;
-    baseURI: string;
-  };
-}
-export interface ScrollEventData {
-  scrollX: number;
-  scrollY: number;
-  url: string;
-  timestamp: string;
-}
-export type CustomMouseEventType =
-  | 'mousedown'
-  | 'mouseup'
-  | 'mousemove'
-  | 'drag';
+import { CustomMouseEventType } from '../../../types/mouseEvent.type';
+import { ScrollEventData } from '../../../types/mouseEvent.type';
+import { MouseEventData } from '../../../types/mouseEvent.type';
 
 export class MouseTracker {
   private static instance: MouseTracker | null = null;
   private leftButtonPressed: boolean = false;
-  private experimentID: string | null = null;
+  private experimentID: number | null = null;
 
   public static getInstance = () => {
     if (!MouseTracker.instance) {

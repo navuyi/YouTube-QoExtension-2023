@@ -1,3 +1,4 @@
+import { KeyboardTracker } from './models/KeyboardTracker';
 import { MouseTracker } from './models/MouseTracker';
 import { NetworkThrottler } from './models/NetworkThrottler';
 import { DebugDataMonitor } from './models/video/DebugDataMonitor';
@@ -47,6 +48,9 @@ window.addEventListener('load', function () {
 
 const mouseTracker = MouseTracker.getInstance();
 mouseTracker.init();
+
+const keyboardTracker = KeyboardTracker.getInstance();
+keyboardTracker.init();
 
 const throttler = NetworkThrottler.getInstance();
 throttler.init();
