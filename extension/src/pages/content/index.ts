@@ -1,12 +1,12 @@
 import { MouseTracker } from './models/MouseTracker';
 import { NetworkThrottler } from './models/NetworkThrottler';
 import { DebugDataMonitor } from './models/video/DebugDataMonitor';
-import { VideoEventsMonitor } from './models/video/VideoEventsMonitor';
+import { PlayerEventMonitor } from './models/video/PlayerEventMonitor';
 
 console.log('Hello world');
 
 const debugDataMonitor = new DebugDataMonitor();
-const videoEventsMonitor = new VideoEventsMonitor();
+const videoEventsMonitor = new PlayerEventMonitor();
 
 /**
  * Event is fired when page is loaded and data is updated

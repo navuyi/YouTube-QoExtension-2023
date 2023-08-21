@@ -1,6 +1,13 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm'
 import { Experiment } from './Experiment'
 
+/**
+ * DebugData entity(table) contains debug data (nerd statistics) captured by the browser extension.
+ * it has foreign key to Experiment entity(table).
+ * There is no video foreign key. Instead there is a
+ * sessionID which is a unique v4-uuid generated on every video enter.
+ * Can also group by experiment or videoID (the unique video ID exposed by YouTube).
+ */
 @Entity()
 export class DebugData {
   @PrimaryGeneratedColumn()
@@ -58,8 +65,8 @@ export class DebugData {
   date: string
 
   @Column({ nullable: true })
-  timestmap: string
+  timestamp: string
 
-  @ManyToOne(() => Experiment, (experiment) => experiment.debugData, { nullable: true }) //! LATER ! Set nullable to FALSE later
+  @ManyToOne(() => Experiment, (experiment) => experiment.debugData, { nullable: false })
   experiment: Experiment
 }

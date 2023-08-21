@@ -3,7 +3,8 @@ import { DataSource } from 'typeorm'
 import { Experiment } from './entities/Experiment'
 import { DebugData } from './entities/DebugData'
 import { MouseEvent } from './entities/MouseEvent'
-import { VideoPlayerEvent } from './entities/VideoPlayerEvent'
+import { PlayerEvent } from './entities/PlayerEvent'
+import { ScrollEvent } from './entities/ScrollEvent'
 
 export const AppDataSource = new DataSource({
   type: 'sqlite',
@@ -17,7 +18,7 @@ export const AppDataSource = new DataSource({
       : './src/database/database.sqlite',
   synchronize: true, // <-- DO NOT USE IN PRODUCTION
   logging: false,
-  entities: [Experiment, DebugData, MouseEvent, VideoPlayerEvent], // <-- all entities have to be imported
+  entities: [Experiment, DebugData, MouseEvent, PlayerEvent, ScrollEvent], // <-- all entities have to be imported
   subscribers: [],
   migrations: [],
   dropSchema: true, // <-- DO NOT USE IN PRODUCTION

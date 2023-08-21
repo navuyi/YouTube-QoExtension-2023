@@ -14,4 +14,10 @@ export const API_ENDPOINTS = {
   mouseEvent: {
     post: `${URL_BASE}/mouseEvent`,
   },
+  playerEvent: {
+    post: `${URL_BASE}/playerEvent`,
+  },
+  scrollEvent: {
+    post: `${URL_BASE}/scrollEvent`,
+  },
 };

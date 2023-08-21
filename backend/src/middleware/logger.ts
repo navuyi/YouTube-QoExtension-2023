@@ -2,7 +2,10 @@ import * as winston from 'winston'
 import type { Request, Response, NextFunction } from 'express'
 
 const logger = winston.createLogger({
-  transports: [new winston.transports.Console()],
+  transports: [
+    new winston.transports.Console(),
+    new winston.transports.Console({ level: 'error' }),
+  ],
   format: winston.format.combine(
     winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
     winston.format.colorize(),

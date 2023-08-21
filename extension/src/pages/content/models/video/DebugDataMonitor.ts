@@ -4,6 +4,7 @@ import { DebugDataElements } from '../../../../types/debugData.type';
 import { DateTime } from 'luxon';
 import { v4 as uuidv4 } from 'uuid';
 import { api } from '../../../../API/api';
+import { VariablesStorage } from '../../../../utils/storage/ChromeStorage';
 
 const HtmlQueryElements = {
   video: 'video', // <-- tag
@@ -17,10 +18,11 @@ export class DebugDataMonitor {
   private debugDataElements: DebugDataElements | null = null;
   private interval: ReturnType<typeof setInterval> | null = null;
   private sessionID: string | null = null; // <-- ID generated on every video enter
+  private experimentID: string | null = null;
 
-  constructor() {}
+  public init = async (): Promise<void> => {
+    this.experimentID = String(await VariablesStorage.getItem('experimentID'));
 
-  public init = (): void => {
     // Check if the debug stats are already opened
     const playerDebugDataContainer = document.querySelector(
       HtmlQueryElements.playerDebugDataContainer
@@ -58,6 +60,7 @@ export class DebugDataMonitor {
     }
     const chunk: object = {
       sessionID: this.sessionID,
+      experimentID: this.experimentID,
       videoID:
         this.debugDataElements.videoIDsCPN.innerText.split('/')[0] || null,
       sCPN: this.debugDataElements.videoIDsCPN.innerText.split('/')[1] || null,
@@ -88,8 +91,9 @@ export class DebugDataMonitor {
       bufferHealth: this.debugDataElements.bufferHealth.innerText || null,
       mysteryText: this.debugDataElements.mysteryText.innerText || null,
       date: this.debugDataElements.date.innerText || null,
-      timestmap: DateTime.now().toISO(),
+      timestamp: DateTime.now().toISO(),
     };
+    console.log(chunk);
     for (const key in chunk) {
       const k = key as keyof DebugDataChunk;
       if (chunk[k]) {

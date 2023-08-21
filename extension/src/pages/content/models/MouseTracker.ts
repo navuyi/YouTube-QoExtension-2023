@@ -1,3 +1,4 @@
+import { DateTime } from 'luxon';
 import { api } from '../../../API/api';
 import { VariablesStorage } from '../../../utils/storage/ChromeStorage';
 
@@ -28,6 +29,8 @@ export interface MouseEventData {
 export interface ScrollEventData {
   scrollX: number;
   scrollY: number;
+  url: string;
+  timestamp: string;
 }
 export type CustomMouseEventType =
   | 'mousedown'
@@ -38,8 +41,7 @@ export type CustomMouseEventType =
 export class MouseTracker {
   private static instance: MouseTracker | null = null;
   private leftButtonPressed: boolean = false;
-
-  private constructor() {}
+  private experimentID: string | null = null;
 
   public static getInstance = () => {
     if (!MouseTracker.instance) {
@@ -48,7 +50,9 @@ export class MouseTracker {
     return MouseTracker.instance;
   };
 
-  public init = () => {
+  public init = async () => {
+    this.experimentID = await VariablesStorage.getItem('experimentID');
+
     window.onmousedown = this.handleMousePressed.bind(this);
     window.onmouseup = this.handleMousePressed.bind(this);
     window.onmousemove = this.handleMouseMove.bind(this);
@@ -69,7 +73,7 @@ export class MouseTracker {
     if (this.leftButtonPressed === true) {
       this.handleMouseEvent(e, 'drag');
     } else {
-      //this.handleMouseEvent(e, 'mousemove'); // <-- not sending mousemove update due to high load
+      // this.handleMouseEvent(e, 'mousemove'); // <-- not sending mousemove update due to high load
     }
   };
 
@@ -77,7 +81,10 @@ export class MouseTracker {
     const data: ScrollEventData = {
       scrollX: window.scrollX,
       scrollY: window.scrollY,
+      url: window.location.href,
+      timestamp: DateTime.now().toISO() as string,
     };
+    api.scrollEvent.post(data);
   };
 
   private handleMouseEvent = async (
@@ -85,10 +92,9 @@ export class MouseTracker {
     type: CustomMouseEventType
   ) => {
     const target = e.target as HTMLElement;
-    const experimentID = await VariablesStorage.getItem('experimentID');
 
     const data: any = {
-      experimentID: experimentID,
+      experimentID: this.experimentID,
 
       pageX: e.pageX,
       pageY: e.pageY,

@@ -1,13 +1,25 @@
 import { Logger } from '../../../../utils/Logger';
+import { VariablesStorage } from '../../../../utils/storage/ChromeStorage';
+import { api } from '../../../../API/api';
+import { DateTime } from 'luxon';
 
-export class VideoEventsMonitor {
+export type VideoEvent =
+  | 'PLAYING'
+  | 'PAUSED'
+  | 'SEEKING'
+  | 'SEEKED'
+  | 'BUFFERING';
+
+export class PlayerEventMonitor {
   private video: HTMLVideoElement | null = null;
   private interval: ReturnType<typeof setInterval> | null = null;
-  private logger: Logger = new Logger('[VideoEventsMonitor]', false);
+  private logger: Logger = new Logger('[VideoEventsMonitor]', true);
+  private experimentID: number | null = null;
 
   constructor() {}
 
-  public init = (): void => {
+  public init = async (): Promise<void> => {
+    this.experimentID = await VariablesStorage.getItem('experimentID');
     const video = document.querySelector('video') as HTMLVideoElement;
     if (!video) {
       setTimeout(() => {
@@ -29,25 +41,38 @@ export class VideoEventsMonitor {
 
       this.video.onpause = (e) => {
         this.logger.log('PAUSED');
+        this.handleEvent('PAUSED');
       };
 
       this.video.onseeking = (e) => {
         this.logger.log('SEEKING');
+        this.handleEvent('SEEKING');
       };
 
       this.video.onseeked = (e) => {
         this.logger.log('SEEKED');
+        this.handleEvent('SEEKED');
       };
 
       this.video.onplaying = (e) => {
         this.logger.log('PLAYING');
-      };
-
-      this.video.onfullscreenchange = (e) => {
-        this.logger.log('FULLSCREEN CHANGE');
+        this.handleEvent('PLAYING');
       };
     } else {
       throw new Error('Video element unavailable');
+    }
+  };
+
+  private handleEvent = async (name: string) => {
+    try {
+      const data = {
+        experimentID: this.experimentID,
+        timestamp: DateTime.local().toISO(),
+        name,
+      };
+      await api.playerEvent.post(data);
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -74,7 +99,6 @@ export class VideoEventsMonitor {
 
       const inside = currentTime >= start && currentTime <= end;
       if (inside) {
-        // Found a buffered range that contains the video's currentTime
         return true;
       }
     }
@@ -85,6 +109,7 @@ export class VideoEventsMonitor {
     const isBuffering = !this.isPlayerInBuffer();
     if (isBuffering === true) {
       this.logger.log('BUFFERING');
+      this.handleEvent('BUFFERING');
     }
   };
 }

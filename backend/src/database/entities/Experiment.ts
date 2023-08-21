@@ -1,10 +1,16 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm'
 import { DebugData } from './DebugData'
 import { MouseEvent } from './MouseEvent'
-import { VideoPlayerEvent } from './VideoPlayerEvent'
+import { PlayerEvent } from './PlayerEvent'
+import { ScrollEvent } from './ScrollEvent'
 
 export type SubjectSex = 'male' | 'female' | 'undisclosed'
 
+/**
+ * Experiment entity (table) contains information on experiment subjects.
+ * Other experiment data are linked to this entity via foreign key.
+ * Experiment is assigned to each subject.
+ */
 @Entity()
 export class Experiment {
   @PrimaryGeneratedColumn()
@@ -25,6 +31,9 @@ export class Experiment {
   @OneToMany(() => MouseEvent, (mouseEvent) => mouseEvent.experiment)
   mouseEvents: MouseEvent[]
 
-  @OneToMany(() => VideoPlayerEvent, (videoPlayerEvent) => videoPlayerEvent.experiment)
-  videoPlayerEvents: VideoPlayerEvent[]
+  @OneToMany(() => PlayerEvent, (playerEvent) => playerEvent.experiment)
+  playerEvents: PlayerEvent[]
+
+  @OneToMany(() => ScrollEvent, (scrollEvent) => scrollEvent.experiment)
+  scrollEvents: ScrollEvent[]
 }

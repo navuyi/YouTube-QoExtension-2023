@@ -42,4 +42,24 @@ export const api = {
       }
     },
   },
+  playerEvent: {
+    post: async (data: object) => {
+      try {
+        const response = await axios.post(API_ENDPOINTS.playerEvent.post, data);
+        return response.data;
+      } catch (err) {
+        throw err;
+      }
+    },
+  },
+  scrollEvent: {
+    post: async (data: object) => {
+      try {
+        const response = await axios.post(API_ENDPOINTS.scrollEvent.post, data);
+        return response.data;
+      } catch (err) {
+        throw err;
+      }
+    },
+  },
 };
