@@ -13,7 +13,7 @@ export type VideoEvent =
 export class PlayerEventMonitor {
   private video: HTMLVideoElement | null = null;
   private interval: ReturnType<typeof setInterval> | null = null;
-  private logger: Logger = new Logger('[VideoEventsMonitor]', true);
+  private logger: Logger = new Logger('[VideoEventsMonitor]', false);
   private experimentID: number | null = null;
 
   constructor() {}

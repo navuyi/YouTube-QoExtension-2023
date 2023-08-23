@@ -93,7 +93,7 @@ export class DebugDataMonitor {
       date: this.debugDataElements.date.innerText || null,
       timestamp: DateTime.now().toISO(),
     };
-    console.log(chunk);
+
     for (const key in chunk) {
       const k = key as keyof DebugDataChunk;
       if (chunk[k]) {

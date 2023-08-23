@@ -2,12 +2,14 @@ import { DateTime, Duration } from 'luxon';
 import { SettingsStorage } from '../../../../utils/storage/ChromeStorage';
 import { Logger } from '../../../../utils/Logger';
 import { VariablesStorage } from '../../../../utils/storage/ChromeStorage';
+import { AssessmentPanel } from './AssessmentPanel';
 
 export class AssessmentController {
   private static instance: AssessmentController;
   private assessmentInterval: ReturnType<typeof setInterval> | null = null;
   private videoInterval: ReturnType<typeof setInterval> | null = null;
   private logger: Logger = new Logger('[AssessmentController]', true);
+  private assessmentPanel: AssessmentPanel = new AssessmentPanel();
 
   private assessmentTimeout: number | null = null;
   private assessmentRetryTimeout: number | null = null;
@@ -20,6 +22,8 @@ export class AssessmentController {
   }
 
   public init = async () => {
+    this.assessmentPanel.init();
+
     const started = await VariablesStorage.getItem('assessmentStarted');
     if (started === true) {
       const waitingForVideo = await VariablesStorage.getItem(
@@ -107,8 +111,8 @@ export class AssessmentController {
 
   private showAssessmentPanel = async () => {
     this.logger.log('Displaying assessment panel');
-    window.alert('Assessment panel');
-    this.scheduleNextAssessment('long');
-    this.waitForAssessment();
+    //window.alert('Assessment panel');
+    //this.scheduleNextAssessment('long');
+    //this.waitForAssessment();
   };
 }

@@ -13,7 +13,7 @@ export class NetworkThrottler {
   private bitrateIntervalMs: number | null = null;
   private bitrateIndex: number = 0;
 
-  private logger: Logger = new Logger('[NetworkThrottler]');
+  private logger: Logger = new Logger('[NetworkThrottler]', false);
 
   constructor() {}
 
@@ -66,7 +66,7 @@ export class NetworkThrottler {
   };
 
   private executeBitrateChange = async () => {
-    console.log('Bitrate change');
+    this.logger.log('Bitrate change');
     if (!this.bitrates || this.bitrates.length === 0)
       throw new Error('Bitrates are unavailable');
     const value = this.bitrates[this.bitrateIndex];

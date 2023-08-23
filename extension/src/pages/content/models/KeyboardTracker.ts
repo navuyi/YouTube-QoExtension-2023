@@ -3,7 +3,7 @@ import { VariablesStorage } from '../../../utils/storage/ChromeStorage';
 
 export class KeyboardTracker {
   private experimentID: number | null = null;
-  private logger: Logger = new Logger('[KeyboardTracker]', true);
+  private logger: Logger = new Logger('[KeyboardTracker]', false);
   private static instance: KeyboardTracker | null = null;
 
   public static getInstance = () => {
