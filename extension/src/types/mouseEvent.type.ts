@@ -23,6 +23,7 @@ export interface MouseEventData {
   };
 }
 export interface ScrollEventData {
+  experimentID: number;
   scrollX: number;
   scrollY: number;
   url: string;

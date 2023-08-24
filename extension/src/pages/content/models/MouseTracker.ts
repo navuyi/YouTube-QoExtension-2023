@@ -46,6 +46,7 @@ export class MouseTracker {
 
   private handleScroll = (e: Event) => {
     const data: ScrollEventData = {
+      experimentID: this.experimentID as number,
       scrollX: window.scrollX,
       scrollY: window.scrollY,
       url: window.location.href,

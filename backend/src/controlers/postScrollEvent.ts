@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express'
 import { ExperimentRepository } from '../database/repositories/experiment.repository'
 import { ScrollEventRepository } from '../database/repositories/scrollEvent.repository'
+import { CustomError } from '../utils/CustomError'
 
 export interface PostScrollEventRequestBody {
   experimentID: number
@@ -15,7 +16,7 @@ export const postScrollEvent = async (req: Request, res: Response, next: NextFun
     const { experimentID, ...data } = req.body as PostScrollEventRequestBody
     const experiment = await ExperimentRepository.findOne({ where: { id: experimentID } })
     if (!experiment) {
-      throw new Error(`Experiment with id ${experimentID} not found`)
+      throw new CustomError(`Experiment with id ${experimentID} not found`, 400)
     }
     const scrollEvtData = {
       ...data,
