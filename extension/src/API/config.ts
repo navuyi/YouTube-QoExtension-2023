@@ -20,4 +20,7 @@ export const API_ENDPOINTS = {
   scrollEvent: {
     post: `${URL_BASE}/scrollEvent`,
   },
+  assessment: {
+    post: `${URL_BASE}/assessment`,
+  },
 };

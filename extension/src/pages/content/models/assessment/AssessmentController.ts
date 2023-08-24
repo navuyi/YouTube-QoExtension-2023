@@ -3,6 +3,12 @@ import { SettingsStorage } from '../../../../utils/storage/ChromeStorage';
 import { Logger } from '../../../../utils/Logger';
 import { VariablesStorage } from '../../../../utils/storage/ChromeStorage';
 import { AssessmentPanel } from './AssessmentPanel';
+import { Video } from '../video/Video';
+import { api } from '../../../../API/api';
+
+export interface HandleAssessmentSubmit {
+  (value: number, description: string): Promise<void>;
+}
 
 export class AssessmentController {
   private static instance: AssessmentController;
@@ -14,6 +20,8 @@ export class AssessmentController {
   private assessmentTimeout: number | null = null;
   private assessmentRetryTimeout: number | null = null;
 
+  private asmtStart: DateTime | null = null;
+
   public static getInstance(): AssessmentController {
     if (!AssessmentController.instance) {
       AssessmentController.instance = new AssessmentController();
@@ -22,7 +30,7 @@ export class AssessmentController {
   }
 
   public init = async () => {
-    this.assessmentPanel.init();
+    this.assessmentPanel.init(this.handleAssessmentSubmit);
 
     const started = await VariablesStorage.getItem('assessmentStarted');
     if (started === true) {
@@ -109,10 +117,37 @@ export class AssessmentController {
     await VariablesStorage.setItem('nextAssessment', next.toISO());
   };
 
-  private showAssessmentPanel = async () => {
-    this.logger.log('Displaying assessment panel');
-    //window.alert('Assessment panel');
-    //this.scheduleNextAssessment('long');
-    //this.waitForAssessment();
+  private handleAssessmentSubmit: HandleAssessmentSubmit = async (
+    value: number,
+    description: string
+  ) => {
+    const started = this.asmtStart as DateTime;
+    const timestamp = DateTime.now();
+    const diff = timestamp.diff(started);
+
+    const data = {
+      experimentID: await VariablesStorage.getItem('experimentID'),
+      value: value,
+      description: description,
+      started: started.toISO(),
+      timestamp: timestamp.toISO(),
+      duration: diff.toMillis(),
+    };
+
+    api.assessment.post(data).then(() => {
+      this.logger.log('Assessment submitted');
+    });
+
+    this.logger.log('Resuming playback after sending assessment.');
+    Video.play();
+    this.assessmentPanel.hide();
+    this.scheduleNextAssessment('long');
+    this.waitForAssessment();
+  };
+
+  private showAssessmentPanel = () => {
+    Video.pause();
+    this.assessmentPanel.show();
+    this.asmtStart = DateTime.now();
   };
 }

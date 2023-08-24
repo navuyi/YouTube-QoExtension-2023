@@ -5,6 +5,7 @@ import { getNextExperimentID } from '../controlers/getNextExperimentID'
 import { postMouseEvent } from '../controlers/postMouseEvent'
 import { postPlayerEvent } from '../controlers/postPlayerEvent'
 import { postScrollEvent } from '../controlers/postScrollEvent'
+import { postAssessment } from '../controlers/postAssessment'
 
 const commonRouter = Router()
 
@@ -15,5 +16,6 @@ commonRouter.post('/experiment', postExperiment)
 commonRouter.post('/mouseEvent', postMouseEvent)
 commonRouter.post('/playerEvent', postPlayerEvent)
 commonRouter.post('/scrollEvent', postScrollEvent)
+commonRouter.post('/assessment', postAssessment)
 
 export default commonRouter

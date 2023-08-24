@@ -62,4 +62,14 @@ export const api = {
       }
     },
   },
+  assessment: {
+    post: async (data: object) => {
+      try {
+        const response = await axios.post(API_ENDPOINTS.assessment.post, data);
+        return response.data;
+      } catch (err) {
+        throw err;
+      }
+    },
+  },
 };

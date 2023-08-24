@@ -3,6 +3,7 @@ import { DebugData } from './DebugData'
 import { MouseEvent } from './MouseEvent'
 import { PlayerEvent } from './PlayerEvent'
 import { ScrollEvent } from './ScrollEvent'
+import { Assessment } from './Assessment'
 
 export type SubjectSex = 'male' | 'female' | 'undisclosed'
 
@@ -36,4 +37,7 @@ export class Experiment {
 
   @OneToMany(() => ScrollEvent, (scrollEvent) => scrollEvent.experiment)
   scrollEvents: ScrollEvent[]
+
+  @OneToMany(() => Assessment, (assessment) => assessment.experiment)
+  assessments: Assessment[]
 }
