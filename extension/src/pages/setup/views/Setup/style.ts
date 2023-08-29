@@ -8,5 +8,23 @@ export const style: Style = {
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: '#282828',
+  },
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+    width: '30%',
+  },
+  header: {
+    fontSize: '24px',
+    color: 'white',
+    padding: 0,
+    margin: 0,
+  },
+  inputWrapper: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
   },
 };

@@ -15,7 +15,6 @@ export class KeyboardTracker {
 
   public init = async (): Promise<void> => {
     this.experimentID = await VariablesStorage.getItem('experimentID');
-
     window.onkeydown = this.handleKeyDown.bind(this);
   };
 
