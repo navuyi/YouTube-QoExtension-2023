@@ -29,9 +29,9 @@ const ExperimentVariablesDefault: ExperimentVariables = {
 
 export const ExperimentSettingsDefault: ExperimentSettings = {
   bitrateScenario: [200e3, 250e3, 500e3, 750e3, 800e3, 900e3], // bps
-  bitrateIntervalMs: 5000, // time between network throttling changes
-  assessmentTimeoutMs: 10000, // time before next assessment panel shows up
-  assessmentRetryTimeoutMs: 5000, // retry time if the assessment was opened outside of the video
+  bitrateIntervalMs: 15e3, // time between network throttling changes
+  assessmentTimeoutMs: 150e3, // time before next assessment panel shows up
+  assessmentRetryTimeoutMs: 30e3, // retry time if the assessment was opened outside of the video
   assessmentQuestion: 'Proszę ocenić jakość serwisu od strony audio-wizualnej', // text visible on the assessment panel
   useAssessments: false, // enable/disable assessments
 }
