@@ -132,7 +132,7 @@ export class DebugDataMonitor {
     // Make invisible and unclickable
     const container = document.querySelector(HtmlQueryElements.playerDebugDataContainer) as HTMLElement
     if (container) {
-      container.style.visibility = 'hidden'
+      container.style.opacity = '0'
       container.style.pointerEvents = 'none'
     }
   }
