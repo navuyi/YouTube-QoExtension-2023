@@ -1,7 +1,6 @@
 import React from 'react'
 import { Routes, Route, BrowserRouter } from 'react-router-dom'
 import Setup from './views/Setup/Setup'
-import Settings from './views/Settings/Settings'
 import { HashRouter } from 'react-router-dom'
 import ThemeProvider, { ThemeProviderProps } from '@mui/material/styles/ThemeProvider'
 import { createTheme } from '@mui/material'

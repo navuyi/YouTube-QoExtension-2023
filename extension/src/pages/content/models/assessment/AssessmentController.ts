@@ -30,6 +30,11 @@ export class AssessmentController {
   }
 
   public init = async () => {
+    const enabled = await SettingsStorage.getItem('useAssessments')
+    if (enabled === false) {
+      this.logger.log('Assessment module disabled. Exiting.')
+      return
+    }
     this.assessmentPanel.init(this.handleAssessmentSubmit)
 
     const started = await VariablesStorage.getItem('assessmentStarted')
