@@ -8,8 +8,9 @@ import ThemeProvider, {
 } from '@mui/material/styles/ThemeProvider';
 import { createTheme } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
-
+import { Provider } from 'react-redux';
 import './style.module.scss';
+import { store } from './redux/store';
 
 const darkTheme = createTheme({
   palette: {
@@ -22,10 +23,12 @@ function App() {
     <HashRouter>
       <ThemeProvider theme={darkTheme}>
         <CssBaseline />
-        <Routes>
-          <Route path="/" element={<Setup />} />
-          <Route path="/settings" element={<Settings />} />
-        </Routes>
+        <Provider store={store}>
+          <Routes>
+            <Route path="/" element={<Setup />} />
+            <Route path="/settings" element={<Settings />} />
+          </Routes>
+        </Provider>
       </ThemeProvider>
     </HashRouter>
   );
