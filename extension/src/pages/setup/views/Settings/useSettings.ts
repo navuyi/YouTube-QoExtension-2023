@@ -6,8 +6,8 @@ export const useSettings = () => {
   const [settings, setSettings] = useState<ExperimentSettings>({
     bitrateIntervalMs: 0,
     bitrateScenario: [],
-    assessmentTimeout: 0,
-    assessmentRetryTimeout: 0,
+    assessmentTimeoutMs: 0,
+    assessmentRetryTimeoutMs: 0,
     assessmentQuestion: '',
     useRandomBitrateOrder: false,
     useAssessments: false,
@@ -21,8 +21,8 @@ export const useSettings = () => {
     const experimentSettings: ExperimentSettings = {
       bitrateIntervalMs: await SettingsStorage.getItem('bitrateIntervalMs'),
       bitrateScenario: await SettingsStorage.getItem('bitrateScenario'),
-      assessmentTimeout: await SettingsStorage.getItem('assessmentTimeout'),
-      assessmentRetryTimeout: await SettingsStorage.getItem('assessmentRetryTimeout'),
+      assessmentTimeoutMs: await SettingsStorage.getItem('assessmentTimeoutMs'),
+      assessmentRetryTimeoutMs: await SettingsStorage.getItem('assessmentRetryTimeoutMs'),
       assessmentQuestion: await SettingsStorage.getItem('assessmentQuestion'),
       useRandomBitrateOrder: await SettingsStorage.getItem('useRandomBitrateOrder'),
       useAssessments: await SettingsStorage.getItem('useAssessments'),

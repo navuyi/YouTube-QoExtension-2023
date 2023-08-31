@@ -40,7 +40,7 @@ const Settings = () => {
           <span style={style.subHeader}>Assessment</span>
           <Box>
             <InputLabel>Assessment timeout [ms]</InputLabel>
-            <TextField size='small' variant='outlined' value={settings?.assessmentTimeout} onChange={() => {}}></TextField>
+            <TextField size='small' variant='outlined' value={settings?.assessmentTimeoutMs} onChange={() => {}}></TextField>
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <InputLabel>Use assessments</InputLabel>
