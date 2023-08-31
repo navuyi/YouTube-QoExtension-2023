@@ -11,7 +11,7 @@ const commonRouter = Router()
 
 commonRouter.post('/debugDatum', postDebugDatum)
 
-commonRouter.get('/experiment/nextID', getNextExperimentID)
+commonRouter.get('/experiment/next/id', getNextExperimentID)
 commonRouter.post('/experiment', postExperiment)
 commonRouter.post('/mouseEvent', postMouseEvent)
 commonRouter.post('/playerEvent', postPlayerEvent)
