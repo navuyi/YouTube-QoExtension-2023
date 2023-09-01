@@ -23,7 +23,6 @@ function App() {
         <Provider store={store}>
           <Routes>
             <Route path='/' element={<Setup />} />
-            {/* <Route path="/settings" element={<Settings />} /> */}
           </Routes>
         </Provider>
       </ThemeProvider>

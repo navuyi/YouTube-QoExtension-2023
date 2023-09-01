@@ -4,11 +4,13 @@ export interface ExperimentVariables {
   experimentID: number | null
 
   nextAssessment: string | null
+  experimentFinishes: string | null
   assessmentStarted: boolean
   assessmentWaitingForVideo: boolean
 }
 
 export interface ExperimentSettings {
+  experimentDurationMs: number
   bitrateScenario: number[] | null
   bitrateIntervalMs: number
   assessmentTimeoutMs: number
@@ -21,6 +23,7 @@ const ExperimentVariablesDefault: ExperimentVariables = {
   running: false,
   nextBitrateChange: null,
   experimentID: null,
+  experimentFinishes: null,
 
   nextAssessment: null,
   assessmentStarted: false,
@@ -28,6 +31,7 @@ const ExperimentVariablesDefault: ExperimentVariables = {
 }
 
 export const ExperimentSettingsDefault: ExperimentSettings = {
+  experimentDurationMs: 0.5 * 1e3 * 60,
   bitrateScenario: [200e3, 250e3, 500e3, 750e3, 800e3, 900e3], // bps
   bitrateIntervalMs: 15e3, // time between network throttling changes
   assessmentTimeoutMs: 150e3, // time before next assessment panel shows up

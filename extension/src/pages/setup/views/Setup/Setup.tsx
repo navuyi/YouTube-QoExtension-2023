@@ -1,5 +1,5 @@
 import { style } from './style'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Button, TextField, InputLabel, Select, MenuItem } from '@mui/material'
 import { useExperimentStart } from './useExperimentStart'
 import { redirect } from 'react-router'

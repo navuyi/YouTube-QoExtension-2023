@@ -26,6 +26,9 @@ export class Experiment {
   @Column()
   started: string
 
+  @Column({ nullable: true })
+  ended: string
+
   @OneToMany(() => DebugData, (debugData) => debugData.experiment)
   debugData: DebugData[]
 

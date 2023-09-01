@@ -27,10 +27,19 @@ chrome.runtime.onMessage.addListener((msg: message, sender: chrome.runtime.Messa
       },
     })
   } else if (msg.flag === 'DEBUGGER_ATTACH') {
-    if (sender.tab && sender.tab.id) /*no await*/ attach(sender.tab.id, sendResponse)
-    else throw new Error('Cannot get tab ID and attach debugger')
+    if (sender.tab && sender.tab.id) {
+      /* no await */ attach(sender.tab.id, sendResponse)
+    } else {
+      throw new Error('Cannot get tab ID and attach debugger')
+    }
   } else if (msg.flag === 'NETWORK_THROTTLE') {
-    if (sender.tab && sender.tab.id) /*no await*/ throttleBandwidth(sender.tab.id, msg.data.bitrate, sendResponse)
+    if (sender.tab && sender.tab.id) {
+      /* no await */ throttleBandwidth(sender.tab.id, msg.data.bitrate, sendResponse)
+    }
+  } else if (msg.flag === 'FINISHED') {
+    if (sender.tab && sender.tab.id) {
+      finishExperiment(sender.tab.id, sendResponse)
+    }
   }
 
   return true // <-- essential
@@ -42,6 +51,19 @@ const attach = async (tabID: number, sendResponse): Promise<void> => {
     sendResponse({ flag: 'DEBUGGER_ATTACH', msg: 'Debugger attached' })
   } catch (error: any) {
     sendResponse({ flag: 'DEBUGGER_ATTACH', msg: error.message })
+  }
+}
+
+const finishExperiment = async (tabID: number, sendResponse): Promise<void> => {
+  try {
+    await chrome.debugger.detach({ tabId: tabID })
+    await chrome.tabs.update(tabID, {
+      url: 'finished.html',
+    })
+    sendResponse({ flag: 'FINISHED', msg: 'Redirected to finished.html' })
+  } catch (error: any) {
+    console.error(error)
+    sendResponse({ flag: 'FINISHED', msg: error.message })
   }
 }
 

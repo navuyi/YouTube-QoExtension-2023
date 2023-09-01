@@ -19,5 +19,5 @@ export const AppDataSource = new DataSource({
   entities: [Experiment, DebugData, MouseEvent, PlayerEvent, ScrollEvent, Assessment], // <-- all entities have to be imported
   subscribers: [],
   migrations: [],
-  dropSchema: true, // <-- DO NOT USE IN PRODUCTION
+  dropSchema: false, // <-- DO NOT USE IN PRODUCTION
 })
