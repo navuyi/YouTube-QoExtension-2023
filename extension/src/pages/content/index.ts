@@ -88,13 +88,12 @@ const init = async () => {
         })
       } catch (err) {
         console.log('Could not update experiment ended time')
-        console.log(err)
       } finally {
         await chrome.storage.local.set(StorageDefault)
         chrome.runtime.sendMessage({ flag: 'FINISHED' })
       }
     }
-  }, 5000)
+  }, 5000) // <-- checking every 5 seconds, not time critical
 }
 
 init()
