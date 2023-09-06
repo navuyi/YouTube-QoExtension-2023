@@ -15,6 +15,9 @@ export const API_ENDPOINTS = {
   mouseEvent: {
     post: `${URL_BASE}/mouseEvent`,
   },
+  keyboardEvent: {
+    post: `${URL_BASE}/keyboardEvent`,
+  },
   playerEvent: {
     post: `${URL_BASE}/playerEvent`,
   },

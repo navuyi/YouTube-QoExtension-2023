@@ -45,6 +45,7 @@ export class MouseEvent {
   @Column('simple-json', { nullable: true })
   element: {
     className: string | null
+    innerText: string | null
     tag: string | null
     id: string | null
     baseURI: string | null

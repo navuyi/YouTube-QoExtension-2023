@@ -7,6 +7,7 @@ import { postPlayerEvent } from '../controlers/postPlayerEvent'
 import { postScrollEvent } from '../controlers/postScrollEvent'
 import { postAssessment } from '../controlers/postAssessment'
 import { patchExperiment } from '../controlers/patchExperiment'
+import { postKeyboardEvent } from '../controlers/postKeyboardEvent'
 
 const commonRouter = Router()
 
@@ -19,5 +20,6 @@ commonRouter.post('/playerEvent', postPlayerEvent)
 commonRouter.post('/scrollEvent', postScrollEvent)
 commonRouter.post('/assessment', postAssessment)
 commonRouter.patch('/experiment', patchExperiment)
+commonRouter.post('/keyboardEvent', postKeyboardEvent)
 
 export default commonRouter

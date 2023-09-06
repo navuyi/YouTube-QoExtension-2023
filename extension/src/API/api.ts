@@ -60,6 +60,16 @@ export const api = {
       }
     },
   },
+  keyboardEvent: {
+    post: async (data: object) => {
+      try {
+        const response = await axios.post(API_ENDPOINTS.keyboardEvent.post, data)
+        return response.data
+      } catch (err) {
+        throw err
+      }
+    },
+  },
   scrollEvent: {
     post: async (data: object) => {
       try {

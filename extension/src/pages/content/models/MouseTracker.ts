@@ -1,48 +1,48 @@
-import { DateTime } from 'luxon';
-import { api } from '../../../API/api';
-import { VariablesStorage } from '../../../utils/storage/ChromeStorage';
-import { CustomMouseEventType } from '../../../types/mouseEvent.type';
-import { ScrollEventData } from '../../../types/mouseEvent.type';
-import { MouseEventData } from '../../../types/mouseEvent.type';
+import { DateTime } from 'luxon'
+import { api } from '../../../API/api'
+import { VariablesStorage } from '../../../utils/storage/ChromeStorage'
+import { CustomMouseEventType } from '../../../types/mouseEvent.type'
+import { ScrollEventData } from '../../../types/mouseEvent.type'
+import { MouseEventData } from '../../../types/mouseEvent.type'
 
 export class MouseTracker {
-  private static instance: MouseTracker | null = null;
-  private leftButtonPressed: boolean = false;
-  private experimentID: number | null = null;
+  private static instance: MouseTracker | null = null
+  private leftButtonPressed: boolean = false
+  private experimentID: number | null = null
 
   public static getInstance = () => {
     if (!MouseTracker.instance) {
-      MouseTracker.instance = new MouseTracker();
+      MouseTracker.instance = new MouseTracker()
     }
-    return MouseTracker.instance;
-  };
+    return MouseTracker.instance
+  }
 
   public init = async () => {
-    this.experimentID = await VariablesStorage.getItem('experimentID');
+    this.experimentID = await VariablesStorage.getItem('experimentID')
 
-    window.onmousedown = this.handleMousePressed.bind(this);
-    window.onmouseup = this.handleMousePressed.bind(this);
-    window.onmousemove = this.handleMouseMove.bind(this);
-    window.onscroll = this.handleScroll.bind(this);
-  };
+    window.onmousedown = this.handleMousePressed.bind(this)
+    window.onmouseup = this.handleMousePressed.bind(this)
+    window.onmousemove = this.handleMouseMove.bind(this)
+    window.onscroll = this.handleScroll.bind(this)
+  }
 
   private handleMousePressed = (e: MouseEvent) => {
     if (e.type === 'mousedown' && e.button === 0) {
-      this.leftButtonPressed = true;
-      this.handleMouseEvent(e, 'mousedown');
+      this.leftButtonPressed = true
+      this.handleMouseEvent(e, 'mousedown')
     } else if (e.type === 'mouseup' && e.button === 0) {
-      this.leftButtonPressed = false;
-      this.handleMouseEvent(e, 'mouseup');
+      this.leftButtonPressed = false
+      this.handleMouseEvent(e, 'mouseup')
     }
-  };
+  }
 
   private handleMouseMove = (e: MouseEvent) => {
     if (this.leftButtonPressed === true) {
-      this.handleMouseEvent(e, 'drag');
+      this.handleMouseEvent(e, 'drag')
     } else {
       // this.handleMouseEvent(e, 'mousemove'); // <-- not sending mousemove update due to high load
     }
-  };
+  }
 
   private handleScroll = (e: Event) => {
     const data: ScrollEventData = {
@@ -51,19 +51,15 @@ export class MouseTracker {
       scrollY: window.scrollY,
       url: window.location.href,
       timestamp: DateTime.now().toISO() as string,
-    };
-    api.scrollEvent.post(data);
-  };
+    }
+    api.scrollEvent.post(data)
+  }
 
-  private handleMouseEvent = async (
-    e: MouseEvent,
-    type: CustomMouseEventType
-  ) => {
-    const target = e.target as HTMLElement;
+  private handleMouseEvent = async (e: MouseEvent, type: CustomMouseEventType) => {
+    const target = e.target as HTMLElement
 
     const data: any = {
       experimentID: this.experimentID,
-
       pageX: e.pageX,
       pageY: e.pageY,
       screenX: e.screenX,
@@ -79,15 +75,17 @@ export class MouseTracker {
       timestamp: new Date().toISOString(),
       element: {
         className: target.className,
+        innerText: target.innerText.substring(0, 100),
         tag: target.tagName,
         id: target.id,
         baseURI: target.baseURI,
       },
-    };
-    try {
-      api.mouseEvent.post(data);
-    } catch (err) {
-      console.log('Error sending mouse data!');
     }
-  };
+    console.log(data.element.innerText)
+    try {
+      api.mouseEvent.post(data)
+    } catch (err) {
+      console.log('Error sending mouse data!')
+    }
+  }
 }

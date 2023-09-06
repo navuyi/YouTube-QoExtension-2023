@@ -60,6 +60,7 @@ const init = async () => {
     console.log('load')
   })
 
+  // Initialize modules
   mouseTracker.init()
   keyboardTracker.init()
   throttler.init()

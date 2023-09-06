@@ -4,6 +4,7 @@ import { MouseEvent } from './MouseEvent'
 import { PlayerEvent } from './PlayerEvent'
 import { ScrollEvent } from './ScrollEvent'
 import { Assessment } from './Assessment'
+import { KeyboardEvent } from './KeyboardEvent'
 
 export type SubjectSex = 'male' | 'female' | 'undisclosed'
 
@@ -43,4 +44,7 @@ export class Experiment {
 
   @OneToMany(() => Assessment, (assessment) => assessment.experiment)
   assessments: Assessment[]
+
+  @OneToMany(() => KeyboardEvent, (keyboardEvent) => keyboardEvent.experiment)
+  keyboardEvents: KeyboardEvent[]
 }

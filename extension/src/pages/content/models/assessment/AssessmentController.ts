@@ -30,8 +30,8 @@ export class AssessmentController {
   }
 
   public init = async () => {
-    const enabled = await SettingsStorage.getItem('useAssessments')
-    if (enabled === false) {
+    const useAssessments = await SettingsStorage.getItem('useAssessments')
+    if (useAssessments === false) {
       this.logger.log('Assessment module disabled. Exiting.')
       return
     }
@@ -115,9 +115,29 @@ export class AssessmentController {
         delta = await SettingsStorage.getItem('assessmentTimeoutMs')
         break
     }
-    this.logger.log(`Scheduling next assessment in ${delta} ms`)
+    const useJitter = await SettingsStorage.getItem('useJitter')
     const next = DateTime.now().plus({ milliseconds: delta })
-    await VariablesStorage.setItem('nextAssessment', next.toISO())
+    if (useJitter === true && type === 'long') {
+      const jittered = await this.applyJitter(next)
+      this.logger.log(`Next jittered assessment at: ${jittered.toISO()}`)
+      await VariablesStorage.setItem('nextAssessment', jittered.toISO())
+    } else {
+      this.logger.log(`Next assessment without jitter at: ${next.toISO()}`)
+      await VariablesStorage.setItem('nextAssessment', next.toISO())
+    }
+  }
+
+  private applyJitter = async (next: DateTime) => {
+    const jitterRangeMs = await SettingsStorage.getItem('assessmentJitterRangeMs')
+    const sign = [-1, 1][Math.floor(Math.random() * 2)]
+    const randomJitterMs = Math.floor(Math.random() * (jitterRangeMs[1] - jitterRangeMs[0] + 1)) + jitterRangeMs[0]
+    if (sign === 1) {
+      this.logger.log(`Applying jitter of PLUS ${randomJitterMs} ms`)
+      return next.plus({ milliseconds: randomJitterMs })
+    } else {
+      this.logger.log(`Applying jitter of MINUS ${randomJitterMs} ms`)
+      return next.minus({ milliseconds: randomJitterMs })
+    }
   }
 
   private handleAssessmentSubmit: HandleAssessmentSubmit = async (value: number, description: string) => {
@@ -134,9 +154,15 @@ export class AssessmentController {
       duration: diff.toMillis(),
     }
 
-    api.assessment.post(data).then(() => {
-      this.logger.log('Assessment submitted')
-    })
+    api.assessment
+      .post(data)
+      .then(() => {
+        this.logger.log('Assessment submitted')
+      })
+      .then(() => {})
+      .catch((err) => {
+        console.log(err)
+      })
 
     this.logger.log('Resuming playback after sending assessment.')
     Video.play()
