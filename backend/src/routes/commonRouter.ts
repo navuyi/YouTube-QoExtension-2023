@@ -1,25 +1,23 @@
 import { Router } from 'express'
+
 import { postDebugDatum } from '../controlers/postDebugDatum'
 import { postExperiment } from '../controlers/postExperiment'
-import { getNextExperimentID } from '../controlers/getNextExperimentID'
-import { postMouseEvent } from '../controlers/postMouseEvent'
-import { postPlayerEvent } from '../controlers/postPlayerEvent'
-import { postScrollEvent } from '../controlers/postScrollEvent'
+import { postEvent } from '../controlers/postEvent'
 import { postAssessment } from '../controlers/postAssessment'
+
+import { getNextExperimentID } from '../controlers/getNextExperimentID'
+
 import { patchExperiment } from '../controlers/patchExperiment'
-import { postKeyboardEvent } from '../controlers/postKeyboardEvent'
 
 const commonRouter = Router()
 
 commonRouter.post('/debugDatum', postDebugDatum)
+commonRouter.post('/experiment', postExperiment)
+commonRouter.post('/assessment', postAssessment)
+commonRouter.post('/event', postEvent)
 
 commonRouter.get('/experiment/next/id', getNextExperimentID)
-commonRouter.post('/experiment', postExperiment)
-commonRouter.post('/mouseEvent', postMouseEvent)
-commonRouter.post('/playerEvent', postPlayerEvent)
-commonRouter.post('/scrollEvent', postScrollEvent)
-commonRouter.post('/assessment', postAssessment)
+
 commonRouter.patch('/experiment', patchExperiment)
-commonRouter.post('/keyboardEvent', postKeyboardEvent)
 
 export default commonRouter

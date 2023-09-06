@@ -4,6 +4,7 @@ import { SettingsStorage } from '../../../utils/storage/ChromeStorage'
 
 import { VariablesStorage } from '../../../utils/storage/ChromeStorage'
 import { Logger } from '../../../utils/Logger'
+import { api } from '../../../API/api'
 
 export class NetworkThrottler {
   private static instance: NetworkThrottler | null = null
@@ -77,11 +78,33 @@ export class NetworkThrottler {
         bitrate: value,
       },
     }
+    // Sending msg to service worker (background)
     const res: message = await chrome.runtime.sendMessage(msg)
     this.logger.log(res.msg!)
 
-    if (this.bitrateIndex < this.bitrates.length - 1) this.bitrateIndex += 1
-    else this.bitrateIndex = 0
+    const body = {
+      experimentID: await VariablesStorage.getItem('experimentID'),
+      timestamp: new Date().toISOString(),
+      source: 'network',
+      type: 'throttle',
+      location: window.location.href,
+      details: {
+        bitrate: value,
+      },
+    }
+    // Send msg to backend
+    api.event
+      .post(body)
+      .then(() => {})
+      .catch((err) => {
+        console.log(err)
+      })
+
+    if (this.bitrateIndex < this.bitrates.length - 1) {
+      this.bitrateIndex += 1
+    } else {
+      this.bitrateIndex = 0
+    }
   }
 
   private scheduleNextBitrateChange = async () => {

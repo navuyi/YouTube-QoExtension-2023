@@ -1,10 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm'
 import { DebugData } from './DebugData'
-import { MouseEvent } from './MouseEvent'
-import { PlayerEvent } from './PlayerEvent'
-import { ScrollEvent } from './ScrollEvent'
 import { Assessment } from './Assessment'
-import { KeyboardEvent } from './KeyboardEvent'
+import { Event } from './Event'
 
 export type SubjectSex = 'male' | 'female' | 'undisclosed'
 
@@ -33,18 +30,9 @@ export class Experiment {
   @OneToMany(() => DebugData, (debugData) => debugData.experiment)
   debugData: DebugData[]
 
-  @OneToMany(() => MouseEvent, (mouseEvent) => mouseEvent.experiment)
-  mouseEvents: MouseEvent[]
-
-  @OneToMany(() => PlayerEvent, (playerEvent) => playerEvent.experiment)
-  playerEvents: PlayerEvent[]
-
-  @OneToMany(() => ScrollEvent, (scrollEvent) => scrollEvent.experiment)
-  scrollEvents: ScrollEvent[]
-
   @OneToMany(() => Assessment, (assessment) => assessment.experiment)
   assessments: Assessment[]
 
-  @OneToMany(() => KeyboardEvent, (keyboardEvent) => keyboardEvent.experiment)
-  keyboardEvents: KeyboardEvent[]
+  @OneToMany(() => Event, (event) => event.experiment)
+  events: Event[]
 }

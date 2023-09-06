@@ -12,19 +12,10 @@ export const API_ENDPOINTS = {
   debugDatum: {
     post: `${URL_BASE}/debugDatum`,
   },
-  mouseEvent: {
-    post: `${URL_BASE}/mouseEvent`,
-  },
-  keyboardEvent: {
-    post: `${URL_BASE}/keyboardEvent`,
-  },
-  playerEvent: {
-    post: `${URL_BASE}/playerEvent`,
-  },
-  scrollEvent: {
-    post: `${URL_BASE}/scrollEvent`,
-  },
   assessment: {
     post: `${URL_BASE}/assessment`,
+  },
+  event: {
+    post: `${URL_BASE}/event`,
   },
 }

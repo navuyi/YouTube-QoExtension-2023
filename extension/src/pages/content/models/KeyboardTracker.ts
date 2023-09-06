@@ -1,6 +1,7 @@
 import { api } from '../../../API/api'
 import { Logger } from '../../../utils/Logger'
 import { VariablesStorage } from '../../../utils/storage/ChromeStorage'
+import { DateTime } from 'luxon'
 
 export class KeyboardTracker {
   private experimentID: number | null = null
@@ -21,18 +22,23 @@ export class KeyboardTracker {
   }
 
   private handleKeyEvent = async (e: KeyboardEvent) => {
-    const evt = {
-      type: e.type,
+    const body = {
       experimentID: this.experimentID,
-      altKey: e.altKey,
-      shiftKey: e.shiftKey,
-      ctrlKey: e.ctrlKey,
-      key: e.key,
-      timestamp: new Date().toISOString(),
-      repeat: e.repeat,
+      timestamp: DateTime.now().toISO(),
+      source: 'subject',
+      type: e.type,
+      location: window.location.href,
+      details: {
+        altKey: e.altKey,
+        shiftKey: e.shiftKey,
+        ctrlKey: e.ctrlKey,
+        key: e.key,
+        repeat: e.repeat,
+      },
     }
+
     try {
-      api.keyboardEvent.post(evt)
+      api.event.post(body)
     } catch (err) {
       console.log('Error sending keyboard event')
     }

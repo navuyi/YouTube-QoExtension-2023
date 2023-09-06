@@ -40,50 +40,20 @@ export const api = {
       },
     },
   },
-  mouseEvent: {
-    post: async (data: object) => {
-      try {
-        const response = await axios.post(API_ENDPOINTS.mouseEvent.post, data)
-        return response.data
-      } catch (err) {
-        throw err
-      }
-    },
-  },
-  playerEvent: {
-    post: async (data: object) => {
-      try {
-        const response = await axios.post(API_ENDPOINTS.playerEvent.post, data)
-        return response.data
-      } catch (err) {
-        throw err
-      }
-    },
-  },
-  keyboardEvent: {
-    post: async (data: object) => {
-      try {
-        const response = await axios.post(API_ENDPOINTS.keyboardEvent.post, data)
-        return response.data
-      } catch (err) {
-        throw err
-      }
-    },
-  },
-  scrollEvent: {
-    post: async (data: object) => {
-      try {
-        const response = await axios.post(API_ENDPOINTS.scrollEvent.post, data)
-        return response.data
-      } catch (err) {
-        throw err
-      }
-    },
-  },
   assessment: {
     post: async (data: object) => {
       try {
         const response = await axios.post(API_ENDPOINTS.assessment.post, data)
+        return response.data
+      } catch (err) {
+        throw err
+      }
+    },
+  },
+  event: {
+    post: async (data: object) => {
+      try {
+        const response = await axios.post(API_ENDPOINTS.event.post, data)
         return response.data
       } catch (err) {
         throw err
