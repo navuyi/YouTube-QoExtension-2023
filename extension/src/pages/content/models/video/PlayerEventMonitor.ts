@@ -3,7 +3,7 @@ import { VariablesStorage } from '../../../../utils/storage/ChromeStorage'
 import { api } from '../../../../API/api'
 import { DateTime } from 'luxon'
 
-export type VideoEvent = 'PLAYING' | 'PAUSED' | 'SEEKING' | 'SEEKED' | 'BUFFERING'
+export type VideoEvent = 'playing' | 'paused' | 'seeking' | 'seeked' | 'buffering'
 
 export class PlayerEventMonitor {
   private video: HTMLVideoElement | null = null
@@ -36,29 +36,29 @@ export class PlayerEventMonitor {
 
       this.video.onpause = (e) => {
         this.logger.log('PAUSED')
-        this.handleEvent('PAUSED')
+        this.handleEvent('paused')
       }
 
       this.video.onseeking = (e) => {
         this.logger.log('SEEKING')
-        this.handleEvent('SEEKING')
+        this.handleEvent('seeking')
       }
 
       this.video.onseeked = (e) => {
         this.logger.log('SEEKED')
-        this.handleEvent('SEEKED')
+        this.handleEvent('seeked')
       }
 
       this.video.onplaying = (e) => {
         this.logger.log('PLAYING')
-        this.handleEvent('PLAYING')
+        this.handleEvent('playing')
       }
     } else {
       throw new Error('Video element unavailable')
     }
   }
 
-  private handleEvent = async (type: string) => {
+  private handleEvent = async (type: VideoEvent) => {
     const body = {
       experimentID: this.experimentID,
       timestamp: DateTime.now().toISO(),
@@ -108,7 +108,7 @@ export class PlayerEventMonitor {
     const isBuffering = !this.isPlayerInBuffer()
     if (isBuffering === true) {
       this.logger.log('BUFFERING')
-      this.handleEvent('BUFFERING')
+      this.handleEvent('buffering')
     }
   }
 }

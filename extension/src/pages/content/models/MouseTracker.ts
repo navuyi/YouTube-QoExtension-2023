@@ -36,7 +36,7 @@ export class MouseTracker {
 
   private handleMouseMove = (e: MouseEvent) => {
     if (this.leftButtonPressed === true) {
-      this.handleMouseEvent(e, 'drag')
+      this.handleMouseEvent(e, 'mousedrag')
     } else {
       // this.handleMouseEvent(e, 'mousemove'); // <-- not sending mousemove update due to high load
     }

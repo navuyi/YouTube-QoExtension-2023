@@ -6,9 +6,8 @@ import { EventRepository } from '../database/repositories/eventRepository.reposi
 
 export interface PostEventRequestBody {
   experimentID: number
-
   source: EventSource
-  type: string
+  type: string // eg. mousedown, keyup, scroll, drag
   timestamp: string
   location: string
 
