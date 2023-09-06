@@ -16,17 +16,20 @@ export class KeyboardTracker {
 
   public init = async (): Promise<void> => {
     this.experimentID = await VariablesStorage.getItem('experimentID')
-    window.onkeydown = this.handleKeyDown.bind(this)
+    window.onkeydown = (event: KeyboardEvent) => this.handleKeyEvent(event)
+    window.onkeyup = (event: KeyboardEvent) => this.handleKeyEvent(event)
   }
 
-  private handleKeyDown = async (e: KeyboardEvent) => {
+  private handleKeyEvent = async (e: KeyboardEvent) => {
     const evt = {
+      type: e.type,
       experimentID: this.experimentID,
       altKey: e.altKey,
       shiftKey: e.shiftKey,
       ctrlKey: e.ctrlKey,
       key: e.key,
       timestamp: new Date().toISOString(),
+      repeat: e.repeat,
     }
     try {
       api.keyboardEvent.post(evt)
