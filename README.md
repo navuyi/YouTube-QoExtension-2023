@@ -33,3 +33,41 @@ It would be best to extract the `dist` directory from the `backend` for the purp
 After extracting the `dist` directory navigate inside and run `node index.js`. This will start the backend application.
 
 The SQLite database `database.sqlite` file is located in `dist/src/database` directory. All data captured by the application is persisted there. Be carefull not to delete this file and make sure to create backups periodically.
+
+### Database structure
+
+![Database structure](./db.png)
+
+The event table holds information on events occuring during the experiment:
+
+- source - describes the origin of the event, several are available
+  - network - network event, _throttling_ etc.
+  - player - video player events, _pause_, _seeking_, _buffering_ etc.
+  - subject - subject induced events, _mousemove_, _mousedrag_, _keydown_
+- type - describes detailed type of the event eg. _mousemove_, _buffering_, etc. See the source property above.
+- timestamp: datetime moment of the event
+- location: URL location the event ocurred
+- experimentID: foreing key, pointing to the experiment during which event ocurred
+- details: JSON string containing object with key-value pairs different for each event <b>type</b>
+
+### List of all event <b>types</b>:
+
+- mousedown (subject) - subject clicked left mouse button
+- mouseup (subject) - subject released left mouse button
+- mousedrag (subject) - subject moved mouse while pressing left mouse button
+- scroll (subject) - subject scrolled
+- keydown (subject) - subject pressed keyboard key
+- keyup (subject) - subject released keyboard key
+- throttle (network) - extension executed network throttling
+- buffering (player) - video player is buffering content
+- seeking (player) - video player started seeking to pointed position
+- seeked (player) - video player seeked to pointed position
+- paused (player) - video player was paused
+- playing (player) - video player was resumed
+
+Continuous events, such as _buffering_ and _mosuedrag_ are recorded by the software at time intervals. In the case of _mousedrag_ this interval is indeterminate as it is dependend on platform, browser, system etc; whereas the _buffering_ interval is defined in source code.
+
+For example the _buffering_ event is send to the server at defined intervals as long as the buffering occurs. In contrary to that the _seeking_ and _seeked_ events are send only once in the beginning of the seeking and at the end.
+
+Exemplary log related to video seeking:
+`seeking, buffering, buffering, buffering, ..., buffering, seeked`.
