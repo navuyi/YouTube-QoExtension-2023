@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "ES6",
     "module": "CommonJS",
-    "outDir": "./dist",
+    "outDir": "./build",
     "rootDir": "./src",
     "noEmitOnError": true,
     "lib": ["es2022", "dom"],
@@ -11,6 +11,6 @@
     "experimentalDecorators": true,
     "isolatedModules": true
   },
-  "include": ["src/**/*.ts", "jest.config.js", "src/database"],
-  "exclude": ["node_modules"]
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "src/test"]
 }

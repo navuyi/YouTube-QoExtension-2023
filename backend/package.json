@@ -8,7 +8,8 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "start": "tsc-watch --onsuccess \"node dist/index.js\"",
-    "typeorm": "ts-node ./node_modules/typeorm/cli -f ./ormconfig.json"
+    "typeorm": "typeorm-ts-node-esm",
+    "build": "tsc"
   },
   "keywords": [],
   "author": "",
