@@ -2,11 +2,19 @@
 
 This repository consists of Chrome extension and REST API application (backend). Both are using Node and Javascript.
 
-## Extension
+# Extension
 
-In order to create production build cd into the `extension` directory and run `npm run build`. This command creates build located in the `build` directory. This is the directory to be loaded into the Chrome browser. After loading it, the extension can be used to run the experiments.
+<b>1. After cloning the repository:</b>
 
-### Experiment Settings
+- `cd` into the `./extension` directory and run `npm install` to install required dependencies,
+  <b>2. To install the extension</b>
+- `cd` into the `./extension` directory,
+- run `npm run build` to create extension build,
+- go to Chrome Web Browser and expand context menu by clicking the 🧩 `Puzzle Icon` and select ⚙️ `Manage Extensions` at the bottom,
+- make sure the `Developer Mode` is <b>enabled</b>,
+- click `Load Unpacked` and load the <b>build</b> directory generated as a result of `npm run build` command
+
+# Extension Settings
 
 It is possible to configure settings the experiment will be run with. There is no dedicated UI for manipulating the settings as after each extension reload the settings are set to default values.
 One can change the experiment settings by accessing the `extension/src/utils/storage/index.ts` file and configuring the following constant:
@@ -26,15 +34,25 @@ export const ExperimentSettingsDefault: ExperimentSettings = {
 <b>NOTE</b>
 For any change to take place it is required to re-build the extension by running `npm run build` inside the `extension` directory. After building one must reload the extension in the Chrome browser's extensions menu.
 
-## Backend
+# Backend
 
-It would be best to extract the `dist` directory from the `backend` for the purpose of running the experiment. The entire `backend` containes development setup and source code (typescript) which is transpiled to the `dist` directory.
+<b>1. After cloning the repository:</b>
 
-After extracting the `dist` directory navigate inside and run `node index.js`. This will start the backend application.
+- `cd` into the `./backend` directory and run `npm install` to install required dependencies
 
-The SQLite database `database.sqlite` file is located in `dist/src/database` directory. All data captured by the application is persisted there. Be carefull not to delete this file and make sure to create backups periodically.
+<b>2. To install the backend application:</b>
 
-### Database structure
+- `cd` into `./backend` directory,
+- run `npm install` to install required dependencies,
+- run `npm run build` to create project build,
+- `cd` into the `./backend/build` directory - this directory contains Javascript files ready to be executed by Node environment,
+- run `npx typeorm schema:sync -d ./database/index.js` in order to create the SQLite database file and synchronize it with Entities
+
+<b>To start the backend application</b>
+
+- `cd` into `./backend/build` and run `node index.js`
+
+# Database structure
 
 ![Database structure](./db.png)
 
@@ -50,7 +68,7 @@ The event table holds information on events occuring during the experiment:
 - experimentID: foreing key, pointing to the experiment during which event ocurred
 - details: JSON string containing object with key-value pairs different for each event <b>type</b>
 
-### List of all event <b>types</b>:
+# List of all event <b>types</b>:
 
 - mousedown (subject) - subject clicked left mouse button
 - mouseup (subject) - subject released left mouse button
