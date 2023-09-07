@@ -132,3 +132,9 @@ dist
 
 
 vite.config.ts.timestamp*
+
+./extension/build
+extension/build/*
+*.sqlite
+
+backend/build
