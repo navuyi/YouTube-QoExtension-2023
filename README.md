@@ -10,7 +10,7 @@ This repository consists of Chrome extension and REST API application (backend).
   <b>2. To install the extension</b>
 - `cd` into the `./extension` directory,
 - run `npm run build` to create extension build,
-- go to Chrome Web Browser and expand context menu by clicking the 🧩 `Puzzle Icon` and select ⚙️ `Manage Extensions` at the bottom,
+- go to Chrome Web Browser, expand context menu by clicking the 🧩 `Puzzle Icon` and select ⚙️ `Manage Extensions` at the bottom,
 - make sure the `Developer Mode` is <b>enabled</b>,
 - click `Load Unpacked` and load the <b>build</b> directory generated as a result of `npm run build` command
 
