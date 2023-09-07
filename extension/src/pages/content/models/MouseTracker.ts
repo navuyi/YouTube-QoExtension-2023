@@ -78,7 +78,7 @@ export class MouseTracker {
         scrollY: window.scrollY,
         element: {
           className: target.className,
-          innerText: target.innerText.substring(0, 100),
+          innerText: target.innerText.substring(0, 25),
           tag: target.tagName,
           id: target.id,
           baseURI: target.baseURI,
