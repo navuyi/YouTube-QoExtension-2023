@@ -14,6 +14,13 @@ This repository consists of Chrome extension and REST API application (backend).
 - make sure the `Developer Mode` is <b>enabled</b>,
 - click `Load Unpacked` and load the <b>build</b> directory generated as a result of `npm run build` command
 
+<b>2. To run the extension</b>
+
+- go to Chrome Web Browser and click _YouTube QoExtension_ popup icon
+- fill the required information on subject and start experiment
+
+<b>Backend application must be up and running to start the extension application correctly.</b>
+
 # Extension Settings
 
 It is possible to configure settings the experiment will be run with. There is no dedicated UI for manipulating the settings as after each extension reload the settings are set to default values.
